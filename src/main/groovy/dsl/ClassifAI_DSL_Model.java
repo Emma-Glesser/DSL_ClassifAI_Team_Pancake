@@ -3,7 +3,7 @@ package dsl;
 import kernel.App;
 import kernel.generator.ToWiring;
 import kernel.generator.Visitor;
-import kernel.structural.Program;
+import kernel.structural.arduino.Program;
 
 public class ClassifAI_DSL_Model {
     private Program program;

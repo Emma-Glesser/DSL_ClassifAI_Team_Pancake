@@ -2,9 +2,7 @@ package kernel.structural;
 
 import kernel.generator.Visitor;
 
-import java.util.List;
-
-public class CNN extends ClassifAIAlgorithm {
+class CNN extends ClassifAIAlgorithm {
 
     List<CNNLayer> layers;
 

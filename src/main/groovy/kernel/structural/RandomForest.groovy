@@ -2,7 +2,7 @@ package kernel.structural;
 
 import kernel.generator.Visitor;
 
-public class RandomForest extends ClassifAIAlgorithm {
+class RandomForest extends ClassifAIAlgorithm {
 
     private int nb_estimators;
 

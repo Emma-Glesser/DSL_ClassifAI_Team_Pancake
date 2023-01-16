@@ -2,7 +2,7 @@ package kernel.structural;
 
 import kernel.generator.Visitor;
 
-public class SVM extends ClassifAIAlgorithm {
+class SVM extends ClassifAIAlgorithm {
 
     SVM (String name, String comment) {
         super(name,comment);

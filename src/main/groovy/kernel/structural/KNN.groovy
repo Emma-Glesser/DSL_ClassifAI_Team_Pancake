@@ -2,7 +2,7 @@ package kernel.structural;
 
 import kernel.generator.Visitor;
 
-public class KNN extends ClassifAIAlgorithm {
+class KNN extends ClassifAIAlgorithm {
 
     private int k;
 

@@ -7,9 +7,9 @@ import java.util.Objects;
 import kernel.behavioral.State;
 import kernel.generator.Visitable;
 import kernel.generator.Visitor;
-import kernel.structural.Component;
-import kernel.structural.Program;
-import kernel.structural.Variable;
+import kernel.structural.arduino.Component;
+import kernel.structural.arduino.Program;
+import kernel.structural.arduino.Variable;
 
 public class App implements Visitable {
 

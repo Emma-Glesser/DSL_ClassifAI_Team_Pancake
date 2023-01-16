@@ -12,10 +12,10 @@ import kernel.behavioral.Transition;
 import kernel.condition.LogicalCondition;
 import kernel.condition.RelationalCondition;
 import kernel.condition.UnaryCondition;
-import kernel.structural.Actuator;
-import kernel.structural.Program;
-import kernel.structural.Sensor;
-import kernel.structural.Variable;
+import kernel.structural.arduino.Actuator;
+import kernel.structural.arduino.Program;
+import kernel.structural.arduino.Sensor;
+import kernel.structural.arduino.Variable;
 
 public abstract class Visitor<T> {
 

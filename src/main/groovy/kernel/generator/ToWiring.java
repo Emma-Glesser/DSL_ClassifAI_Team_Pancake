@@ -17,15 +17,13 @@ import kernel.condition.RelationalCondition;
 import kernel.condition.UnaryCondition;
 import kernel.structural.arduino.Actuator;
 import kernel.structural.arduino.Component;
-import kernel.structural.arduino.Program;
+import kernel.structural.Program;
 import kernel.structural.arduino.Sensor;
 import kernel.structural.arduino.Variable;
 import kernel.structural.Actuator;
-import kernel.structural.Code;
 import kernel.structural.Comparison;
 import kernel.structural.Component;
 import kernel.structural.Import;
-import kernel.structural.Program;
 import kernel.structural.Sensor;
 import kernel.structural.Variable;
 

@@ -1,4 +1,4 @@
-package kernel.structural;
+package kernel.structural
 
 import kernel.generator.Visitor;
 
@@ -11,16 +11,20 @@ class RandomForest extends ClassifAIAlgorithm {
         this.nb_estimators = nb_estimators;
     }
 
-    public int getNb_estimators() {
+    int getNb_estimators() {
         return nb_estimators;
     }
 
-    public void setNb_estimators(int nb_estimators) {
+    void setNb_estimators(int nb_estimators) {
         this.nb_estimators = nb_estimators;
     }
 
     @Override
-    public void accept(Visitor<StringBuffer> visitor) {
+    void accept(Visitor<StringBuffer> visitor) {
         visitor.visit(this);
+    }
+
+    def nb_estimators (int nb_estimators) {
+        this.nb_estimators = nb_estimators;
     }
 }

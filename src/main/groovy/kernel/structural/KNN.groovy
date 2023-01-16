@@ -11,8 +11,20 @@ class KNN extends ClassifAIAlgorithm {
         this.k = k;
     }
 
+    int getK() {
+        return k
+    }
+
+    void setK(int k) {
+        this.k = k
+    }
+
     @Override
-    public void accept(Visitor<StringBuffer> visitor) {
+    void accept(Visitor<StringBuffer> visitor) {
         visitor.visit(this);
+    }
+
+    def k (int k) {
+        this.k = k;
     }
 }

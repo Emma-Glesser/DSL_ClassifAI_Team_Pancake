@@ -20,6 +20,14 @@ import kernel.structural.arduino.Component;
 import kernel.structural.arduino.Program;
 import kernel.structural.arduino.Sensor;
 import kernel.structural.arduino.Variable;
+import kernel.structural.Actuator;
+import kernel.structural.Code;
+import kernel.structural.Comparison;
+import kernel.structural.Component;
+import kernel.structural.Import;
+import kernel.structural.Program;
+import kernel.structural.Sensor;
+import kernel.structural.Variable;
 
 /**
  * Quick and dirty visitor to support the generation of Wiring code
@@ -87,9 +95,16 @@ public class ToWiring extends Visitor<StringBuffer> {
     }
 
     @Override
-    public void visit(Variable variable) {
+    public void visit(Import importCode) {
         if(context.get("pass") == PASS.ONE) {
-            write("%s %s = %s;\n", variable.getType(), variable.getName(), variable.getValue());
+//            write("%s %s = %s;\n", variable.getType(), variable.getName(), variable.getValue());
+        }
+    }
+
+    @Override
+    public void visit(Comparison comparisonCode) {
+        if(context.get("pass") == PASS.ONE) {
+//            write("%s %s = %s;\n", variable.getType(), variable.getName(), variable.getValue());
         }
     }
 

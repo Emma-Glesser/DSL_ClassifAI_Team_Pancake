@@ -1,4 +1,14 @@
 package kernel.structural
 
-class Comparison {
+import kernel.generator.Visitor
+
+class Comparison extends Code {
+    Comparison(String comment) {
+        super(comment)
+    }
+
+    @Override
+    void accept(Visitor<StringBuffer> visitor) {
+        visitor.visit(this)
+    }
 }

@@ -4,9 +4,9 @@ import kernel.generator.Visitor;
 
 class KNN extends ClassifAIAlgorithm {
 
-    private int k;
+    private Integer k;
 
-    KNN (String name, String comment, int k) {
+    KNN (String name, String comment, Integer k) {
         super(name,comment);
         this.k = k;
     }
@@ -15,7 +15,7 @@ class KNN extends ClassifAIAlgorithm {
         return k
     }
 
-    void setK(int k) {
+    void setK(Integer k) {
         this.k = k
     }
 
@@ -24,7 +24,7 @@ class KNN extends ClassifAIAlgorithm {
         visitor.visit(this);
     }
 
-    def k (int k) {
+    def k (Integer k) {
         this.k = k;
     }
 }

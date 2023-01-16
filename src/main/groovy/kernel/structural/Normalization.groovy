@@ -2,14 +2,10 @@ package kernel.structural
 
 import kernel.generator.Visitor
 
-class Normalization extends CNNLayer{
+class Normalization extends CNNLayer {
 
-    Normalization(){
-
-    }
-
-    def normalization(){
-
+    Normalization(String comment){
+        super(comment);
     }
 
     @Override

@@ -4,9 +4,9 @@ import kernel.generator.Visitor;
 
 class RandomForest extends ClassifAIAlgorithm {
 
-    private int nb_estimators;
+    private Integer nb_estimators;
 
-    RandomForest(String name, String comment, int nb_estimators) {
+    RandomForest(String name, String comment, Integer nb_estimators) {
         super(name, comment);
         this.nb_estimators = nb_estimators;
     }
@@ -15,7 +15,7 @@ class RandomForest extends ClassifAIAlgorithm {
         return nb_estimators;
     }
 
-    void setNb_estimators(int nb_estimators) {
+    void setNb_estimators(Integer nb_estimators) {
         this.nb_estimators = nb_estimators;
     }
 
@@ -24,7 +24,7 @@ class RandomForest extends ClassifAIAlgorithm {
         visitor.visit(this);
     }
 
-    def nb_estimators (int nb_estimators) {
+    def nb_estimators (Integer nb_estimators) {
         this.nb_estimators = nb_estimators;
     }
 }

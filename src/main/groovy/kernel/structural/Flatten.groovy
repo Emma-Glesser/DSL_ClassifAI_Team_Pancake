@@ -4,12 +4,8 @@ import kernel.generator.Visitor
 
 class Flatten extends CNNLayer {
 
-    Flatten(){
-
-    }
-
-    def flatten(){
-
+    Flatten(String comment){
+        super(comment);
     }
 
     @Override

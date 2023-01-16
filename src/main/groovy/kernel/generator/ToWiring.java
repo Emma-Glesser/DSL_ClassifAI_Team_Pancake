@@ -5,29 +5,15 @@ import java.util.List;
 import dsl.ClassifAI_DSL_Binding;
 import groovy.lang.MissingPropertyException;
 import kernel.App;
-import kernel.behavioral.Action;
-import kernel.behavioral.ActionActuator;
-import kernel.behavioral.ActionPause;
-import kernel.behavioral.ActionVariable;
-import kernel.behavioral.State;
-import kernel.behavioral.Transition;
-import kernel.condition.Condition;
-import kernel.condition.LogicalCondition;
-import kernel.condition.RelationalCondition;
-import kernel.condition.UnaryCondition;
+import kernel.structural.Code;
+import kernel.structural.DataProcessing;
 import kernel.structural.arduino.Actuator;
 import kernel.structural.arduino.Component;
 import kernel.structural.arduino.Program;
 import kernel.structural.arduino.Sensor;
 import kernel.structural.arduino.Variable;
-import kernel.structural.Actuator;
-import kernel.structural.Code;
 import kernel.structural.Comparison;
-import kernel.structural.Component;
 import kernel.structural.Import;
-import kernel.structural.Program;
-import kernel.structural.Sensor;
-import kernel.structural.Variable;
 
 /**
  * Quick and dirty visitor to support the generation of Wiring code
@@ -64,9 +50,14 @@ public class ToWiring extends Visitor<StringBuffer> {
             variable.accept(this);
         }
 
-        write("\n/* States prototypes */\n");
+        write("\n# States prototypes */\n");
 		for(State state: app.getStates()){
 			state.accept(this);
+		}
+
+		write("\n# Cellule de code \n");
+		for(Code code: app.getProgram().getCodes()){
+			code.accept(this);
 		}
 
 		//second pass, setup and loop
@@ -96,6 +87,7 @@ public class ToWiring extends Visitor<StringBuffer> {
 
     @Override
     public void visit(Import importCode) {
+		write("\n# Cellule d'import' \n");
         if(context.get("pass") == PASS.ONE) {
 //            write("%s %s = %s;\n", variable.getType(), variable.getName(), variable.getValue());
         }
@@ -103,10 +95,19 @@ public class ToWiring extends Visitor<StringBuffer> {
 
     @Override
     public void visit(Comparison comparisonCode) {
+		write("\n# Cellule de comparaison des performances des algorithmes \n");
         if(context.get("pass") == PASS.ONE) {
 //            write("%s %s = %s;\n", variable.getType(), variable.getName(), variable.getValue());
         }
     }
+
+	@Override
+	public void visit(DataProcessing dataProcessing) {
+		write("\n# Cellule de traitement des données \n");
+		if(context.get("pass") == PASS.ONE) {
+//            write("%s %s = %s;\n", variable.getType(), variable.getName(), variable.getValue());
+		}
+	}
 
     @Override
 	public void visit(Actuator actuator) {

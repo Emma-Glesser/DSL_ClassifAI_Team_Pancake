@@ -4,6 +4,7 @@ import dsl.ClassifAI_DSL_Binding
 import kernel.NamedElement
 import kernel.generator.Visitable
 import kernel.generator.Visitor
+import kernel.structural.Code
 
 class Program implements NamedElement, Visitable {
     private String name

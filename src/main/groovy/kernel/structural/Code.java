@@ -17,4 +17,8 @@ public abstract class Code implements Visitable {
     public void setComment(String comment) {
         this.comment = comment;
     }
+
+    public void comment (String comment) {
+        this.comment = comment;
+    }
 }

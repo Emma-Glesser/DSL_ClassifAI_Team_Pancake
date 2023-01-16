@@ -8,7 +8,7 @@ import kernel.behavioral.State;
 import kernel.generator.Visitable;
 import kernel.generator.Visitor;
 import kernel.structural.arduino.Component;
-import kernel.structural.arduino.Program;
+import kernel.structural.Program;
 import kernel.structural.arduino.Variable;
 
 public class App implements Visitable {

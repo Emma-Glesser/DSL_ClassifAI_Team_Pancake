@@ -1,10 +1,13 @@
-package kernel.structural.arduino
+package kernel.structural
 
-import dsl.ClassifAI_DSL_Binding
+
 import kernel.NamedElement
 import kernel.generator.Visitable
 import kernel.generator.Visitor
 import kernel.structural.Code
+
+import kernel.structural.arduino.Component
+import kernel.structural.arduino.VariableScope
 
 class Program implements NamedElement, Visitable {
     private String name
@@ -43,7 +46,7 @@ class Program implements NamedElement, Visitable {
         this.name = name
     }
 
-    def codes(@DelegatesTo(strategy = Closure.DELEGATE_ONLY, value = VariableScope) Closure cl) {
+    def codes(@DelegatesTo(strategy = Closure.DELEGATE_ONLY, value = Code) Closure cl) {
         if (codesDefined) {
             throw new RuntimeException("Codes can only be defined once")
         }
@@ -51,6 +54,12 @@ class Program implements NamedElement, Visitable {
         variablesScope.with(cl)
         this.codes = variablesScope.getVariables()
         codesDefined = true
+    }
+
+    def algorithms (@DelegatesTo(strategy = Closure.DELEGATE_ONLY, value = ClassifAIAlgorithm) Closure cl) {
+        Closure code = cl.rehydrate(this, this, this)
+        code.resolveStrategy = Closure.DELEGATE_ONLY
+        code()
     }
 
     def being (@DelegatesTo(strategy=Closure.DELEGATE_ONLY, value=Program) Closure cl) {

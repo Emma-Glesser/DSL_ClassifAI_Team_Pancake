@@ -12,4 +12,8 @@ class Import extends Code {
     void accept(Visitor<StringBuffer> visitor) {
         visitor.visit(this)
     }
+
+    def import_librairies(@DelegatesTo(strategy = Closure.DELEGATE_ONLY, value = ImportLibrary) Closure cl) {
+
+    }
 }

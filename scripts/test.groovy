@@ -1,8 +1,21 @@
-import kernel.structural.RandomForest
-
 import static dsl.ClassifAI_DSL.*
 
 program "test" being {
+
+    imports {
+        import_librairies {
+
+        }
+    }
+
+
+    visualization {
+
+    }
+
+    dataProcessing {
+
+    }
 
     codes {
         comment"liugiytgfi"

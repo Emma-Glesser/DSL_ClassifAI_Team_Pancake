@@ -2,6 +2,7 @@ package dsl
 
 import groovy.transform.TypeChecked
 import kernel.structural.Program
+import kernel.structural.ProgramBeing
 import org.codehaus.groovy.control.CompilerConfiguration
 import org.codehaus.groovy.control.customizers.SecureASTCustomizer
 
@@ -49,7 +50,7 @@ class ClassifAI_DSL {
         return configuration
     }
 
-    static Program program(String _) {
+    static ProgramBeing program(String _) {
         // Note: this is a static method to import in scripts
         return null
     }

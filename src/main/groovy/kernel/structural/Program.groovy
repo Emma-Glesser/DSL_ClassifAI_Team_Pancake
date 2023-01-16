@@ -56,13 +56,31 @@ class Program implements NamedElement, Visitable {
         codesDefined = true
     }
 
+    def imports (@DelegatesTo(strategy = Closure.DELEGATE_ONLY, value = Import) Closure cl) {
+        Closure code = cl.rehydrate(this, this, this)
+        code.resolveStrategy = Closure.DELEGATE_ONLY
+        code()
+    }
+
+    def comparison (@DelegatesTo(strategy = Closure.DELEGATE_ONLY, value = Comparison) Closure cl) {
+        Closure code = cl.rehydrate(this, this, this)
+        code.resolveStrategy = Closure.DELEGATE_ONLY
+        code()
+    }
+
+    def dataProcessing (@DelegatesTo(strategy = Closure.DELEGATE_ONLY, value = DataProcessing) Closure cl) {
+        Closure code = cl.rehydrate(this, this, this)
+        code.resolveStrategy = Closure.DELEGATE_ONLY
+        code()
+    }
+
     def algorithms (@DelegatesTo(strategy = Closure.DELEGATE_ONLY, value = ClassifAIAlgorithm) Closure cl) {
         Closure code = cl.rehydrate(this, this, this)
         code.resolveStrategy = Closure.DELEGATE_ONLY
         code()
     }
 
-    def being (@DelegatesTo(strategy=Closure.DELEGATE_ONLY, value=Program) Closure cl) {
+    def visualization (@DelegatesTo(strategy = Closure.DELEGATE_ONLY, value = Visualization) Closure cl) {
         Closure code = cl.rehydrate(this, this, this)
         code.resolveStrategy = Closure.DELEGATE_ONLY
         code()

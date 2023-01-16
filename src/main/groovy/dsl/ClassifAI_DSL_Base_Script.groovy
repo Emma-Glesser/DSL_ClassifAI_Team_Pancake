@@ -1,15 +1,16 @@
 package dsl
 
 import kernel.structural.Program
+import kernel.structural.ProgramBeing
 
 
 abstract class ClassifAI_DSL_Base_Script extends Script {
 
-    Program program(String name) {
+    ProgramBeing program(String name) {
         Program program = new Program()
         program.name = name
         ((ClassifAI_DSL_Binding)this.getBinding()).getClassifAI_DSLModel().setProgram(program)
-        return program
+        return new ProgramBeing()
     }
 
 	// disable run method while running

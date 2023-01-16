@@ -19,4 +19,12 @@ class Acquisition {
     void setSetName(String setName) {
         this.setName = setName
     }
+
+    public void filePath (String filePath) {
+        this.filePath = filePath;
+    }
+
+    public void setName (String setName) {
+        this.setName = setName;
+    }
 }

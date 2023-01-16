@@ -19,4 +19,13 @@ class Preprocessing {
     void setNormalize(boolean normalize) {
         this.normalize = normalize
     }
+
+    public void reshape (boolean reshape) {
+        this.reshape = reshape;
+    }
+
+    public void normalize (boolean normalize) {
+        this.normalize = normalize;
+    }
+
 }

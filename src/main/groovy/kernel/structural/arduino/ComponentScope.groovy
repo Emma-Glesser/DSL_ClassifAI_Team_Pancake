@@ -1,4 +1,4 @@
-package kernel.structural
+package kernel.structural.arduino
 
 class ComponentScope {
     private List<Component> components

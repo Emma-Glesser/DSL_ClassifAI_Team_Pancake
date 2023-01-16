@@ -1,4 +1,4 @@
-package kernel.structural
+package kernel.structural.arduino
 
 import dsl.ClassifAI_DSL_Binding
 import kernel.NamedElement

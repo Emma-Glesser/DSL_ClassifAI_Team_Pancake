@@ -1,4 +1,4 @@
-package kernel.structural
+package kernel.structural.arduino
 
 class VariableScope {
     private List<Variable> variables

@@ -36,6 +36,24 @@ class DataProcessing extends Code {
         this.preprocessing = preprocessing
     }
 
+    def acquisition (@DelegatesTo(strategy = Closure.DELEGATE_ONLY, value = Acquisition) Closure cl) {
+        Closure code = cl.rehydrate(this, this, this)
+        code.resolveStrategy = Closure.DELEGATE_ONLY
+        code()
+    }
+
+    def selection (@DelegatesTo(strategy = Closure.DELEGATE_ONLY, value = Selection) Closure cl) {
+        Closure code = cl.rehydrate(this, this, this)
+        code.resolveStrategy = Closure.DELEGATE_ONLY
+        code()
+    }
+
+    def preprocessing (@DelegatesTo(strategy = Closure.DELEGATE_ONLY, value = Preprocessing) Closure cl) {
+        Closure code = cl.rehydrate(this, this, this)
+        code.resolveStrategy = Closure.DELEGATE_ONLY
+        code()
+    }
+
     @Override
     void accept(Visitor<StringBuffer> visitor) {
         visitor.visit(this)

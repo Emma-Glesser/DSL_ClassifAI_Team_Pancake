@@ -3,10 +3,19 @@ package kernel.structural
 import kernel.generator.Visitor
 
 class Pooling extends CNNLayer{
-    public int[] strides = new Integer[2];
+    private Integer[] strides = new Integer[2];
 
-    Pooling(int[] strides){
+    Pooling(Integer[] strides, String comment){
+        super(comment);
         this.strides = strides;
+    }
+
+    Integer[] getStrides() {
+        return strides
+    }
+
+    void setStrides(Integer[] strides) {
+        this.strides = strides
     }
 
     @Override
@@ -14,5 +23,8 @@ class Pooling extends CNNLayer{
         visitor.visit(this);
     }
 
+    def strides (Integer[] strides) {
+        this.strides = strides;
+    }
 
 }

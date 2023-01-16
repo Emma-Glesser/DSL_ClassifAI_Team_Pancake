@@ -5,6 +5,7 @@ import kernel.generator.Visitable;
 public abstract class Code implements Visitable {
 
     private String comment;
+    private Preprocessing preprocess;
 
     Code(String comment) {
         this.comment = comment;

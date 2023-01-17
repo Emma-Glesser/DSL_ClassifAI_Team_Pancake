@@ -1,27 +1,24 @@
 package kernel.generator;
 
-import java.util.List;
-
 import dsl.ClassifAI_DSL_Binding;
 import groovy.lang.MissingPropertyException;
 import kernel.App;
-import kernel.structural.Code;
-import kernel.structural.DataProcessing;
+import kernel.structural.*;
 import kernel.structural.arduino.Actuator;
 import kernel.structural.arduino.Component;
-import kernel.structural.Program;
 import kernel.structural.arduino.Sensor;
 import kernel.structural.arduino.Variable;
 
-import kernel.structural.Actuator;
-import kernel.structural.Comparison;
-import kernel.structural.Import;
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Quick and dirty visitor to support the generation of Wiring code
  */
 public class ToWiring extends Visitor<StringBuffer> {
 	enum PASS {ONE, TWO}
 
+    List<AlgorithmImports> imports = new ArrayList<AlgorithmImports>();
 
 	public ToWiring() {
 		this.result = new StringBuffer();
@@ -109,6 +106,51 @@ public class ToWiring extends Visitor<StringBuffer> {
 //            write("%s %s = %s;\n", variable.getType(), variable.getName(), variable.getValue());
 		}
 	}
+
+    @Override
+    public void visit(CNN cnn) {
+        write("\n# CNN algorithm cell \n");
+        if(context.get("pass") == PASS.ONE) {
+
+        }
+    }
+
+    @Override
+    public void visit(SVM svm) {
+        write(svm.getComment());
+        write("\n# SVM algorithm cell \n");
+        if(!imports.contains(AlgorithmImports.SVM_IMPORT)) {
+            imports.add(AlgorithmImports.SVM_IMPORT);
+        }
+        write("svm=svm.SVC()\n");
+        write("model_1=svm.fit(X_train,y_train)\n");
+        write("pred_1=model_1.predict(X_test)\n");
+        write("print(classification_report(y_test,pred_1))\n");
+    }
+
+    @Override
+    public void visit(KNN knn) {
+        write(knn.getComment());
+        write("\n# KNN algorithm cell \n");
+        if(!imports.contains(AlgorithmImports.KNN_IMPORT)) {
+            imports.add(AlgorithmImports.KNN_IMPORT);
+        }
+        write("classifier = KNeighborsClassifier(n_neighbors=k)\n");
+        write("classifier = classifier.fit(train_images_k, train_labels_k)\n");
+        write("pred = classifier.predict(test_images_k)\n");
+        write("accuracy = accuracy_score(test_labels_k, pred)\n");
+    }
+
+    @Override
+    public void visit(RandomForest randomForest) {
+        write(randomForest.getComment());
+        write("\n# RandomForest algorithm cell \n");
+        if(!imports.contains(AlgorithmImports.RANDOM_FOREST)) {
+            imports.add(AlgorithmImports.RANDOM_FOREST);
+        }
+        write("rf=RandomForestClassifier(n_estimators=100)\n");
+        write("rf.fit(X_train,y_train)\n");
+    }
 
     @Override
 	public void visit(Actuator actuator) {

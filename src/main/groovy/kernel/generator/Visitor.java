@@ -4,13 +4,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import kernel.App;
-<<<<<<< Updated upstream
-import kernel.structural.Acquisition;
 import kernel.structural.Comparison;
 import kernel.structural.DataProcessing;
-=======
-import kernel.structural.Comparison;
->>>>>>> Stashed changes
 import kernel.structural.Import;
 import kernel.structural.arduino.Actuator;
 import kernel.structural.Program;

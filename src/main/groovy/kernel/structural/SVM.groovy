@@ -9,7 +9,7 @@ class SVM extends ClassifAIAlgorithm {
     }
 
     @Override
-    public void accept(Visitor<StringBuffer> visitor) {
+    void accept(Visitor<StringBuffer> visitor) {
         visitor.visit(this);
     }
 }

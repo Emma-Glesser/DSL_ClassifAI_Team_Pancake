@@ -41,7 +41,7 @@ class AlgorithmScope {
         this.algorithms.add(algo)
     }
 
-    getAlgorithmList() {
+    List<ClassifAIAlgorithm> getAlgorithmList() {
         return algorithms
     }
 }

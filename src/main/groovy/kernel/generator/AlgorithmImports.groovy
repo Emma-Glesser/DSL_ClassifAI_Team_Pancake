@@ -5,14 +5,14 @@ enum AlgorithmImports {
     KNN_IMPORT("from sklearn.neighbors import KNeighborsClassifier"),
     RANDOM_FOREST("from sklearn.ensemble import RandomForestClassifier");
 
-    private final String value;
+    private final String value
 
     private AlgorithmImports(String value) {
-        this.value = value;
+        this.value = value
     }
 
-    public String getValue() {
-        return this.value;
+    String getValue() {
+        return this.value
     }
 
 

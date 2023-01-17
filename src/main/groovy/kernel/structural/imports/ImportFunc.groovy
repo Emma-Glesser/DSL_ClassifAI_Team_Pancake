@@ -13,19 +13,19 @@ class ImportFunc extends Import {
         visitor.visit(this)
     }
 
-    setFuncName(String name) {
+    void setFuncName(String name) {
         this.funcName = name
     }
 
-    getFuncName() {
+    String getFuncName() {
         return funcName
     }
 
-    setImportFrom(ImportFrom importFrom) {
+    void setImportFrom(ImportFrom importFrom) {
         this.importFrom = importFrom
     }
 
-    getImportFrom() {
+    ImportFrom getImportFrom() {
         return importFrom
     }
 }

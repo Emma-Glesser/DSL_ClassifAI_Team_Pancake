@@ -31,7 +31,7 @@ class ImportScope {
         importFrom
     }
 
-    getImportList() {
+    List<Import> getImportList() {
         return imports
     }
 }

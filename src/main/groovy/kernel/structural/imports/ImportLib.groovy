@@ -13,19 +13,19 @@ class ImportLib extends Import {
         visitor.visit(this)
     }
 
-    setLibName(String name) {
+    void setLibName(String name) {
         this.libName = name
     }
 
-    getLibName() {
+    String getLibName() {
         libName
     }
 
-    setImportAs(ImportAs importAs) {
+    void setImportAs(ImportAs importAs) {
         this.importAs = importAs
     }
 
-    getImportAs() {
+    ImportAs getImportAs() {
         return importAs
     }
 }

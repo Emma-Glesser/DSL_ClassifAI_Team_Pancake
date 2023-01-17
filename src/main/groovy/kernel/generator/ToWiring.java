@@ -28,7 +28,7 @@ import kernel.structural.visualization.Visualization;
 public class ToWiring extends Visitor<StringBuffer> {
 	enum PASS {ONE, TWO}
 
-    List<AlgorithmImports> imports = new ArrayList<AlgorithmImports>();
+    List<AlgorithmImports> imports = new ArrayList<>();
 
 	public ToWiring() {
 		this.result = new StringBuffer();
@@ -46,18 +46,53 @@ public class ToWiring extends Visitor<StringBuffer> {
 		//first pass, create global vars
 		context.put("pass", PASS.ONE);
 
+        write("{\n" +
+                " \"cells\": [");
+
         app.getProgram().accept(this);
 
-		write("\n# Cellule de code \n");
-		for(Import imp: app.getProgram().getImport()){
-			imp.accept(this);
-		}
+//		write("\n# Cellule de code \n");
+//		for(Import imp: app.getProgram().getImport()){
+//			imp.accept(this);
+//		}
+
+        write("\n ],\n" +
+                " \"metadata\": {\n" +
+                "  \"kernelspec\": {\n" +
+                "   \"display_name\": \"Python 3 (ipykernel)\",\n" +
+                "   \"language\": \"python\",\n" +
+                "   \"name\": \"python3\"\n" +
+                "  },\n" +
+                "  \"language_info\": {\n" +
+                "   \"codemirror_mode\": {\n" +
+                "    \"name\": \"ipython\",\n" +
+                "    \"version\": 3\n" +
+                "   },\n" +
+                "   \"file_extension\": \".py\",\n" +
+                "   \"mimetype\": \"text/x-python\",\n" +
+                "   \"name\": \"python\",\n" +
+                "   \"nbconvert_exporter\": \"python\",\n" +
+                "   \"pygments_lexer\": \"ipython3\",\n" +
+                "   \"version\": \"3.6.8\"\n" +
+                "  }\n" +
+                " },\n" +
+                " \"nbformat\": 4,\n" +
+                " \"nbformat_minor\": 4\n" +
+                "}\n");
 	}
 
     @Override
     public void visit(Program program) {
         if(context.get("pass") == PASS.ONE) {
-            write("/**** Program %s ****/\n", program.getName());
+
+            write("\n  {\n" +
+                    "   \"cell_type\": \"markdown\",\n" +
+                    "   \"source\": [\n" +
+                    "    \"# %s\\n\",\n" +
+                    "    \"## MNIST Data Mining Algorithm Comparison\"\n" +
+                    "   ],\n" +
+                    "   \"metadata\": {}\n" +
+                    "  }", program.getName());
         }
     }
 

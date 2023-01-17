@@ -1,1 +1,4 @@
 .idea
+/target/*
+
+!/target/ClassifAI_DSL.jar

@@ -35,11 +35,11 @@ class ClassifAI_DSL {
             tokensWhitelist= []
             //types allowed to be used  (including primitive types)
             constantTypesClassesWhiteList= [
-                    int, Integer, Number, String, boolean, Object, SIGNAL
+                    int, Integer, Number, String, boolean, Object
             ]
             //classes who are allowed to be receivers of method calls
             receiversClassesWhiteList= [
-                    int, Integer, Number, String, boolean, Object, SIGNAL
+                    int, Integer, Number, String, boolean, Object
             ]
         }
 

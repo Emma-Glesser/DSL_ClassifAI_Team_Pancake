@@ -19,9 +19,6 @@ public class ClassifAI_DSL_Model {
     public Object generateCode() {
 		App app = new App();
         app.setProgram(this.program);
-        app.setVariables(this.program.getVariables());
-		app.setComponents(this.program.getComponents());
-		app.setStates(this.program.getStates());
 		Visitor<StringBuffer> codeGenerator = new ToWiring();
         app.check();
 		app.accept(codeGenerator);

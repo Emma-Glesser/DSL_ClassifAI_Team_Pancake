@@ -1,6 +1,7 @@
 package kernel.structural;
 
-import kernel.generator.Visitor;
+import kernel.generator.Visitor
+import kernel.structural.algorithms.ClassifAIAlgorithm;
 
 class SVM extends ClassifAIAlgorithm {
 

@@ -1,7 +1,6 @@
 package dsl
 
 import groovy.transform.TypeChecked
-import kernel.structural.Program
 import kernel.structural.ProgramBeing
 import org.codehaus.groovy.control.CompilerConfiguration
 import org.codehaus.groovy.control.customizers.SecureASTCustomizer
@@ -55,7 +54,7 @@ class ClassifAI_DSL {
         return null
     }
 
-    static enum SIGNAL { HIGH, LOW }
+    static enum Param {Accuracy, ExecTime}
 
     @TypeChecked
     void eval(File scriptFile) {

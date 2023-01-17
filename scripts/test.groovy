@@ -3,18 +3,25 @@ import static dsl.ClassifAI_DSL.*
 program "test" being {
 
     imports {
-        import_librairies {
-            lib "math"
-        }
+        lib "panda" named "pd"
+        func "test" from "defz" named "eiuhgeruoig"
     }
 
-
-    visualization {
-
-    }
+    comparisonParameter = Param.Accuracy
 
     dataProcessing {
-
+        acquisition {
+            filePath "test"
+            setName "bonjour"
+        }
+        selection {
+            testSize 12
+            shuffleData false
+        }
+        preprocessing {
+            reshape true
+            normalize false
+        }
     }
 
     algorithms {
@@ -47,6 +54,16 @@ program "test" being {
             denseLayer {
                 units(5)
             }
+        }
+    }
+
+    visualization {
+        resultsVisualization {
+
+        }
+
+        datasetVisualization {
+
         }
     }
 }

@@ -4,14 +4,13 @@ import dsl.ClassifAI_DSL_Binding;
 import groovy.lang.MissingPropertyException;
 import kernel.App;
 import kernel.structural.*;
-import kernel.structural.arduino.Actuator;
-import kernel.structural.arduino.Component;
-import kernel.structural.arduino.Sensor;
-import kernel.structural.arduino.Variable;
-
+import kernel.structural.Code;
+import kernel.structural.dataProcessing.DataProcessing;
 import java.util.ArrayList;
 import java.util.List;
 
+import kernel.structural.comparison.Comparison;
+import kernel.structural.imports.Import;
 /**
  * Quick and dirty visitor to support the generation of Wiring code
  */
@@ -36,8 +35,8 @@ public class ToWiring extends Visitor<StringBuffer> {
 		//first pass, create global vars
 		context.put("pass", PASS.ONE);
 
-        app.getProgram().accept(this);
 
+        app.getProgram().accept(this);
         write("\n/* Components */\n");
         for(Component component : app.getComponents()){
             component.accept(this);

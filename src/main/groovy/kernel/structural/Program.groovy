@@ -1,32 +1,33 @@
 package kernel.structural
 
-
+import dsl.ClassifAI_DSL.Param
 import kernel.NamedElement
 import kernel.generator.Visitable
 import kernel.generator.Visitor
-import kernel.structural.Code
-
-import kernel.structural.arduino.Component
-import kernel.structural.arduino.VariableScope
+import kernel.structural.algorithms.AlgorithmScope
+import kernel.structural.algorithms.ClassifAIAlgorithm
+import kernel.structural.dataProcessing.DataProcessing
+import kernel.structural.imports.Import
+import kernel.structural.imports.ImportScope
+import kernel.structural.visualization.Visualization
 
 class Program implements NamedElement, Visitable {
     private String name
 
-    private List<Code> codes
+    private List<Import> importList
+    private List<ClassifAIAlgorithm> algorithmList
+    private DataProcessing dataProcessing
+    private Visualization visualization
+    public Param comparisonParameter
 
-    boolean codesDefined = false
+    private boolean importsDefined = false
+    private boolean algorithmsDefined = false
 
     Program() {
-        this.codes = new ArrayList<>()
+        this.importList = new ArrayList<>()
+        this.algorithmList = new ArrayList<>()
     }
 
-    List<Code> getCodes() {
-        return codes
-    }
-
-    List<Component> getComponents() {
-        return components
-    }
 
     @Override
     void setName(String name) {
@@ -46,43 +47,41 @@ class Program implements NamedElement, Visitable {
         this.name = name
     }
 
-    def codes(@DelegatesTo(strategy = Closure.DELEGATE_ONLY, value = Code) Closure cl) {
-        if (codesDefined) {
-            throw new RuntimeException("Codes can only be defined once")
+    def imports(@DelegatesTo(strategy = Closure.DELEGATE_ONLY, value = ImportScope) Closure cl) {
+        if (importsDefined) {
+            throw new RuntimeException("Imports can only be defined once")
         }
-        VariableScope variablesScope = VariableScope.instance
-        variablesScope.with(cl)
-        this.codes = variablesScope.getVariables()
-        codesDefined = true
+        ImportScope importScope = ImportScope.instance
+        importScope.with(cl)
+        this.importList = importScope.getImportList()
+        importsDefined = true
     }
 
-    def imports (@DelegatesTo(strategy = Closure.DELEGATE_ONLY, value = Import) Closure cl) {
-        Closure code = cl.rehydrate(this, this, this)
-        code.resolveStrategy = Closure.DELEGATE_ONLY
-        code()
+    def dataProcessing(@DelegatesTo(strategy = Closure.DELEGATE_ONLY, value = DataProcessing) Closure cl) {
+        if (dataProcessing != null) {
+            throw new RuntimeException("Data processing can only be defined once")
+        }
+        DataProcessing dataProcessing = new DataProcessing()
+        dataProcessing.with(cl)
+        this.dataProcessing = dataProcessing
     }
 
-    def comparison (@DelegatesTo(strategy = Closure.DELEGATE_ONLY, value = Comparison) Closure cl) {
-        Closure code = cl.rehydrate(this, this, this)
-        code.resolveStrategy = Closure.DELEGATE_ONLY
-        code()
+    def algorithms(@DelegatesTo(strategy = Closure.DELEGATE_ONLY, value = AlgorithmScope) Closure cl) {
+        if (algorithmsDefined) {
+            throw new RuntimeException("Algorithms can only be defined once")
+        }
+        AlgorithmScope algorithmScope = AlgorithmScope.instance
+        algorithmScope.with(cl)
+        this.algorithmList = algorithmScope.getAlgorithmList()
+        algorithmsDefined = true
     }
 
-    def dataProcessing (@DelegatesTo(strategy = Closure.DELEGATE_ONLY, value = DataProcessing) Closure cl) {
-        Closure code = cl.rehydrate(this, this, this)
-        code.resolveStrategy = Closure.DELEGATE_ONLY
-        code()
-    }
-
-    def algorithms (@DelegatesTo(strategy = Closure.DELEGATE_ONLY, value = ClassifAIAlgorithm) Closure cl) {
-        Closure code = cl.rehydrate(this, this, this)
-        code.resolveStrategy = Closure.DELEGATE_ONLY
-        code()
-    }
-
-    def visualization (@DelegatesTo(strategy = Closure.DELEGATE_ONLY, value = Visualization) Closure cl) {
-        Closure code = cl.rehydrate(this, this, this)
-        code.resolveStrategy = Closure.DELEGATE_ONLY
-        code()
+    def visualization(@DelegatesTo(strategy = Closure.DELEGATE_ONLY, value = Visualization) Closure cl) {
+        if (visualization != null) {
+            throw new RuntimeException("Visualization can only be defined once")
+        }
+        Visualization visualization = new Visualization()
+        visualization.with(cl)
+        this.visualization = visualization
     }
 }

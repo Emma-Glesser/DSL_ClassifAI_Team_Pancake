@@ -10,10 +10,6 @@ class RandomForest extends ClassifAIAlgorithm {
         return nb_estimators;
     }
 
-    void setNb_estimators(Integer nb_estimators) {
-        this.nb_estimators = nb_estimators
-    }
-
     @Override
     void accept(Visitor<StringBuffer> visitor) {
         visitor.visit(this)

@@ -84,4 +84,20 @@ class Program implements NamedElement, Visitable {
         visualization.with(cl)
         this.visualization = visualization
     }
+
+    List<Import> getImport() {
+        importList
+    }
+
+    List<ClassifAIAlgorithm> getAlgorithms() {
+        algorithmList
+    }
+
+    DataProcessing getDataProcessing() {
+        dataProcessing
+    }
+
+    Visualization getVisualization() {
+        visualization
+    }
 }

@@ -10,13 +10,9 @@ class KNN extends ClassifAIAlgorithm {
         return k
     }
 
-    void setK(Integer k) {
-        this.k = k
-    }
-
     @Override
     void accept(Visitor<StringBuffer> visitor) {
-        visitor.visit(this);
+        visitor.visit(this)
     }
 
     def k (Integer k) {

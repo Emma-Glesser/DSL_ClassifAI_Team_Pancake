@@ -1,5 +1,6 @@
 package kernel.generator;
 
+import dsl.ClassifAI_DSL;
 import kernel.App;
 import kernel.structural.*;
 import kernel.structural.algorithms.CNN;
@@ -133,6 +134,12 @@ public class ToWiring extends Visitor<StringBuffer> {
             algo.accept(this);
         }
 
+        if (app.getProgram().comparisonParameter == ClassifAI_DSL.Param.Accuracy) {
+
+        }
+        else if (app.getProgram().comparisonParameter == ClassifAI_DSL.Param.ExecTime) {
+
+        }
         app.getProgram().getVisualization().accept(this);
 
         removeLastComma();
@@ -185,7 +192,6 @@ public class ToWiring extends Visitor<StringBuffer> {
 //            write("%s %s = %s;\n", variable.getType(), variable.getName(), variable.getValue());
         }
     }
-
 
     @Override
     public void visit(Comparison comparisonCode) {
@@ -256,14 +262,6 @@ public class ToWiring extends Visitor<StringBuffer> {
         StringBuilder cnnBuilder = new StringBuilder();
 
         cnnBuilder.append(
-                        "    \"# reshaping\\n\",\n" +
-                        "    \"X_train=train_images.reshape((60000,28,28,1))\\n\",\n" +
-                        "    \"X_test=test_images.reshape((10000,28,28,1))\\n\",\n" +
-                        "    \"\\n\",\n" +
-                        "    \"# One hot encoding\\n\",\n" +
-                        "    \"y_train=to_categorical(train_labels)\\n\",\n" +
-                        "    \"y_test=to_categorical(test_labels)\\n\",\n" +
-                        "    \"\\n\",\n" +
                         "    \"# building the ConvNet\\n\",\n" +
                         "    \"x0=Input(shape=(28,28,1))\\n\",\n" +
                         "    \"\\n\",\n" +
@@ -296,7 +294,7 @@ public class ToWiring extends Visitor<StringBuffer> {
 
         // Code de vincent SVM
         writeCodeCell(
-                "\"param_grid = {'C': [0.001, 0.01, 0.1, 1, 10, 100],\\n\"\n" +
+                "\"param_grid = {'C': [0.001, 0.01, 0.1, 1, 10, 100, 1000],\\n\"\n" +
                         "\"              'gamma': [1, 0.1, 0.01, 0.001, 0.0001],\\n\"\n" +
                         "\"              'kernel': ['poly']}\\n\"\n" +
                         "\"classifier  = GridSearchCV(SVC(), param_grid, refit = True, verbose = 3)\\n\"\n" +

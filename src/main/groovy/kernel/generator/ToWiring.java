@@ -12,11 +12,14 @@ import kernel.structural.algorithms.layers.Dropout;
 import kernel.structural.algorithms.layers.Flatten;
 import kernel.structural.algorithms.layers.Normalization;
 import kernel.structural.algorithms.layers.Pooling;
+import kernel.structural.dataProcessing.Acquisition;
 import kernel.structural.dataProcessing.DataProcessing;
 import java.util.ArrayList;
 import java.util.List;
 
 import kernel.structural.comparison.Comparison;
+import kernel.structural.dataProcessing.Preprocessing;
+import kernel.structural.dataProcessing.Selection;
 import kernel.structural.imports.Import;
 import kernel.structural.imports.ImportFunc;
 import kernel.structural.imports.ImportLib;
@@ -98,7 +101,7 @@ public class ToWiring extends Visitor<StringBuffer> {
 
     @Override
     public void visit(ImportLib importLib) {
-		write("\n# Cellule d'import' \n");
+		write("\n# Cellule d'import de librairie' \n");
         if(context.get("pass") == PASS.ONE) {
 //            write("%s %s = %s;\n", variable.getType(), variable.getName(), variable.getValue());
         }
@@ -106,7 +109,7 @@ public class ToWiring extends Visitor<StringBuffer> {
 
     @Override
     public void visit(ImportFunc importFunc) {
-        write("\n# Cellule d'import' \n");
+        write("\n# Cellule d'import de fonction' \n");
         if(context.get("pass") == PASS.ONE) {
 //            write("%s %s = %s;\n", variable.getType(), variable.getName(), variable.getValue());
         }
@@ -128,6 +131,42 @@ public class ToWiring extends Visitor<StringBuffer> {
 //            write("%s %s = %s;\n", variable.getType(), variable.getName(), variable.getValue());
 		}
 	}
+
+    @Override
+    public void visit(Acquisition acquisition) {
+        write("\n# Cellule d'acquisition' des données \n");
+        if(context.get("pass") == PASS.ONE) {
+//            write("%s %s = %s;\n", variable.getType(), variable.getName(), variable.getValue());
+            if (acquisition.getSetName().isEmpty() || acquisition.getFilePath().isEmpty()){
+                write("%s = %s\n", acquisition.getSetName(), acquisition.getFilePath());
+            }
+            else {
+                write("Erreur ! Vous devez donner à la fois le nom du dataset et le chemin vers ce dernier\n");
+            }
+        }
+    }
+
+    @Override
+    public void visit(Selection selection) {
+        write("\n# Cellule de sélection des données \n");
+        if(context.get("pass") == PASS.ONE) {
+            if (selection.getTestSize() == 0.0){
+                write("X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = %f, random_state = SEED)\n", selection.getTestSize());
+            }
+            else {
+                write("Erreur ! Vous devez définir une proportion du dataset à utiliser comme set de tests\n");
+            }
+
+        }
+    }
+
+    @Override
+    public void visit(Preprocessing preprocessing) {
+        write("\n# Cellule de reshape et normalisation des données \n");
+        if(context.get("pass") == PASS.ONE) {
+            //            write("%s %s = %s;\n", variable.getType(), variable.getName(), variable.getValue());
+        }
+    }
 
     @Override
     public void visit(Visualization visualization) {

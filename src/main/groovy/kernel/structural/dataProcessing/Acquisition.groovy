@@ -1,5 +1,7 @@
 package kernel.structural.dataProcessing
 
+import kernel.generator.Visitor
+
 class Acquisition {
     private String filePath
     private String setName
@@ -18,5 +20,9 @@ class Acquisition {
 
     void setName (String setName) {
         this.setName = setName
+    }
+
+    void accept(Visitor<StringBuffer> visitor) {
+        visitor.visit(this)
     }
 }

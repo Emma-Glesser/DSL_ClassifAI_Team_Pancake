@@ -1,4 +1,5 @@
 .idea
 /target/*
 
+.metadata
 !/target/ClassifAI_DSL.jar

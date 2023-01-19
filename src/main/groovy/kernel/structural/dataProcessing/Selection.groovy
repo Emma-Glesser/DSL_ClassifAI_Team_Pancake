@@ -1,5 +1,7 @@
 package kernel.structural.dataProcessing
 
+import kernel.generator.Visitor
+
 class Selection {
     private int testSize;
     private boolean shuffleData;
@@ -18,5 +20,9 @@ class Selection {
 
     void shuffleData (boolean shuffleData) {
         this.shuffleData = shuffleData;
+    }
+
+    void accept(Visitor<StringBuffer> visitor) {
+        visitor.visit(this)
     }
 }

@@ -15,8 +15,11 @@ import kernel.structural.algorithms.layers.Flatten;
 import kernel.structural.algorithms.layers.Normalization;
 import kernel.structural.algorithms.layers.Pooling;
 import kernel.structural.comparison.Comparison;
+import kernel.structural.dataProcessing.Acquisition;
 import kernel.structural.dataProcessing.DataProcessing;
 import kernel.structural.Program;
+import kernel.structural.dataProcessing.Preprocessing;
+import kernel.structural.dataProcessing.Selection;
 import kernel.structural.imports.ImportFunc;
 import kernel.structural.imports.ImportLib;
 import kernel.structural.visualization.Visualization;
@@ -28,6 +31,9 @@ public abstract class Visitor<T> {
 
     public abstract void visit(Comparison comparison);
 	public abstract void visit(DataProcessing dataProcessing);
+	public abstract void visit(Acquisition acquisition);
+	public abstract void visit(Selection selection);
+	public abstract void visit(Preprocessing preprocessinf);
 	public abstract void visit(Visualization visualization);
 
     public abstract void visit(CNN cnn);

@@ -1,5 +1,7 @@
 package kernel.structural.dataProcessing
 
+import kernel.generator.Visitor
+
 class Preprocessing {
     private boolean reshape
     private boolean normalize
@@ -20,4 +22,7 @@ class Preprocessing {
         this.normalize = normalize
     }
 
+    void accept(Visitor<StringBuffer> visitor) {
+        visitor.visit(this)
+    }
 }

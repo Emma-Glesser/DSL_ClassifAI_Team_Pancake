@@ -1,25 +1,20 @@
 package kernel.structural.algorithms.layers
 
-import kernel.generator.Visitor
-
 class Dense extends CNNLayer {
 
     private Integer units
-
-    Integer getUnits() {
-        return units
-    }
-
-    void setUnits(Integer units) {
-        this.units = units
-    }
-
-    @Override
-    void accept(Visitor<StringBuffer> visitor) {
-        visitor.visit(this)
-    }
+    private ActivationFunction activation_function
 
     def units(Integer units) {
         this.units = units
+    }
+
+    def activation_function(ActivationFunction activation_function) {
+        this.activation_function = activation_function
+    }
+
+    @Override
+    String getCode(int layerNumber) {
+        return String.format("x%i = Dense(%i, activation='%s')(x%i)", layerNumber, units, activation_function.getValue(), layerNumber-1)
     }
 }

@@ -1,11 +1,9 @@
 package kernel.structural.algorithms.layers
 
-import kernel.generator.Visitor
-
 class Flatten extends CNNLayer {
 
     @Override
-    void accept(Visitor<StringBuffer> visitor) {
-        visitor.visit(this)
+    String getCode(int layerNumber) {
+        return String.format("x%i = Flatten()(x%i)", layerNumber, layerNumber-1)
     }
 }

@@ -1,7 +1,5 @@
 package kernel.structural.algorithms.layers
 
-import kernel.generator.Visitor
-
 class Convolution extends CNNLayer{
 
     private Integer filters
@@ -9,31 +7,6 @@ class Convolution extends CNNLayer{
     private Boolean input_shape
     private Padding padding
     private ActivationFunction activation_function
-
-    Integer getFilters() {
-        return filters
-    }
-
-    Integer[] getKernel_size() {
-        return kernel_size
-    }
-
-    Boolean getInput_shape() {
-        return input_shape
-    }
-
-    Padding getPadding() {
-        return padding
-    }
-
-    ActivationFunction getActivation_function() {
-        return activation_function
-    }
-
-    @Override
-    void accept(Visitor<StringBuffer> visitor) {
-        visitor.visit(this)
-    }
 
     def filters (Integer filters) {
         this.filters = filters
@@ -53,5 +26,10 @@ class Convolution extends CNNLayer{
 
     def activation_function (ActivationFunction activation_function) {
         this.activation_function = activation_function
+    }
+
+    @Override
+    String getCode(int layerNumber) {
+        return String.format("x%i = Conv2D(%i, kernel_size=(%i, %i), activation='%s', padding='%s')(x%i)", layerNumber, filters, kernel_size[0], kernel_size[1], activation_function.getValue(), padding, layerNumber-1)
     }
 }

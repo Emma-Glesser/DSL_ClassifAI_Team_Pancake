@@ -1,21 +1,14 @@
 package kernel.structural.algorithms.layers
 
-import kernel.generator.Visitor
-
 class Pooling extends CNNLayer{
     private Integer[] strides = new Integer[2]
-
-    Integer[] getStrides() {
-        return strides
-    }
-
-    @Override
-    void accept(Visitor<StringBuffer> visitor) {
-        visitor.visit(this)
-    }
 
     def strides (Integer[] strides) {
         this.strides = strides
     }
 
+    @Override
+    String getCode(int layerNumber) {
+        return String.format("x%i = MaxPooling2D(pool_size=(%i, %i), strides=(%i, %i))(x%i)", layerNumber, 2, 2, strides[0], strides[1], layerNumber-1)
+    }
 }

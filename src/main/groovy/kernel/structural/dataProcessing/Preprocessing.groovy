@@ -1,8 +1,9 @@
 package kernel.structural.dataProcessing
 
+import kernel.generator.Visitable
 import kernel.generator.Visitor
 
-class Preprocessing {
+class Preprocessing implements Visitable {
     private boolean reshape
     private boolean normalize
 

@@ -1,8 +1,9 @@
 package kernel.structural.dataProcessing
 
+import kernel.generator.Visitable
 import kernel.generator.Visitor
 
-class Acquisition {
+class Acquisition implements Visitable {
     private String filePath
     private String setName
 

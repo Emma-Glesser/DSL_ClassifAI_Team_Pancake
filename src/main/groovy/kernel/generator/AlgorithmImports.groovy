@@ -1,9 +1,22 @@
 package kernel.generator
 
 enum AlgorithmImports {
-    SVM_IMPORT("from sklearn import svm"),
-    KNN_IMPORT("from sklearn.neighbors import KNeighborsClassifier"),
-    RANDOM_FOREST("from sklearn.ensemble import RandomForestClassifier");
+    SVM_IMPORT( "    \"# Imports for SVM Algorithm\\n\",\n" +
+                "    \"from sklearn.model_selection import GridSearchCV\\n\",\n"),
+
+    KNN_IMPORT( "    \"# Imports for KNN Algorithm\\n\",\n" +
+                "    \"from sklearn.neighbors import KNeighborsClassifier\\n\",\n" +
+                "    \"from sklearn.metrics import accuracy_score"),
+
+    RANDOM_FOREST_IMPORT(   "    \"# Imports for Random Forest Algorithm\\n\",\n" +
+                            "    \"from sklearn.ensemble import RandomForestClassifier\\n\",\n" +
+                            "    \"from sklearn.metrics import accuracy_score"),
+
+    CNN_IMPORT( "    \"# Imports for CNN Algorithm\\n\",\n" +
+                "    \"from keras import Input\\n\",\n" +
+                "    \"from keras.models import Model\\n\",\n" +
+                "    \"from keras.layers import Conv2D, Dense, Dropout, Flatten, MaxPooling2D, Normalization\\n\",\n" +
+                "    \"from tensorflow.keras.utils import to_categorical");
 
     private final String value
 
@@ -11,7 +24,7 @@ enum AlgorithmImports {
         this.value = value
     }
 
-    String getValue() {
+    String getImports() {
         return this.value
     }
 

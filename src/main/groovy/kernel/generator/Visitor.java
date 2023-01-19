@@ -33,21 +33,13 @@ public abstract class Visitor<T> {
 	public abstract void visit(DataProcessing dataProcessing);
 	public abstract void visit(Acquisition acquisition);
 	public abstract void visit(Selection selection);
-	public abstract void visit(Preprocessing preprocessinf);
+	public abstract void visit(Preprocessing preprocessing);
 	public abstract void visit(Visualization visualization);
 
     public abstract void visit(CNN cnn);
     public abstract void visit(SVM svm);
     public abstract void visit(KNN knn);
     public abstract void visit(RandomForest randomForest);
-
-    public abstract void visit(Convolution convolution);
-    public abstract void visit(Dense dense);
-    public abstract void visit(Dropout dropout);
-    public abstract void visit(Flatten flatten);
-    public abstract void visit(Normalization normalization);
-    public abstract void visit(Pooling pooling);
-
     public abstract void visit(ImportLib importLib);
     public abstract void visit(ImportFunc importFunc);
 

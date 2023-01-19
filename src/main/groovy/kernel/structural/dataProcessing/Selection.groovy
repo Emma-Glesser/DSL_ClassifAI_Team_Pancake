@@ -1,10 +1,11 @@
 package kernel.structural.dataProcessing
 
+import kernel.generator.Visitable
 import kernel.generator.Visitor
 
-class Selection {
-    private int testSize;
-    private boolean shuffleData;
+class Selection implements Visitable {
+    private int testSize
+    private boolean shuffleData
 
     boolean getShuffleData() {
         return shuffleData
@@ -15,11 +16,11 @@ class Selection {
     }
 
     void testSize (int testSize) {
-        this.testSize = testSize;
+        this.testSize = testSize
     }
 
     void shuffleData (boolean shuffleData) {
-        this.shuffleData = shuffleData;
+        this.shuffleData = shuffleData
     }
 
     void accept(Visitor<StringBuffer> visitor) {

@@ -28,7 +28,7 @@ enum AlgorithmImports {
             "    \"import pandas as pd\\n\"\n"),
 
     DATA_PREPROCESSING_IMPORT("    \"# Import for data preprocessing\\n\",\n" +
-    "    \"import numpy as np\\n\"\n");
+            "    \"import numpy as np\\n\"\n");
 
 
     private final String value

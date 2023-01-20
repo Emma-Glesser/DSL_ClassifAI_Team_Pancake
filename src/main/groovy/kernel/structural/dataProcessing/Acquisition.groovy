@@ -26,4 +26,10 @@ class Acquisition implements Visitable {
     void accept(Visitor<StringBuffer> visitor) {
         visitor.visit(this)
     }
+
+    String getCode(){
+        return String.format("\"# Data acquisition \\n\"\n" +
+                "    \"%s = pd.read_csv(%s)\\n\"\n",this.setName,this.filePath);
+    }
+
 }

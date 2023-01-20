@@ -109,13 +109,13 @@ public class ToWiring extends Visitor<StringBuffer> {
         if (imports.contains(AlgorithmImports.SVM_IMPORT)) {
             writeCodeCell(AlgorithmImports.SVM_IMPORT.getImports());
         }
+        writeCodeCell(AlgorithmImports.PANDAS_IMPORT.getImports());
+        writeCodeCell(AlgorithmImports.DATA_SELECTION_IMPORT.getImports());
+
     }
 
 	@Override
 	public void visit(App app) {
-		//first pass, create global vars
-		context.put("pass", PASS.ONE);
-
         write("{\n" +
                 " \"cells\": [");
 
@@ -171,85 +171,47 @@ public class ToWiring extends Visitor<StringBuffer> {
 
     @Override
     public void visit(Program program) {
-        if(context.get("pass") == PASS.ONE) {
-            writeMarkDownCell("    \"# %s\\n\",\n" +
-                    "    \"## MNIST Data Mining Algorithm Comparison\"", program.getName());
-        }
+        writeMarkDownCell("    \"# %s\\n\",\n" +
+                "    \"## MNIST Data Mining Algorithm Comparison\"", program.getName());
     }
 
     @Override
     public void visit(ImportLib importLib) {
 		write("\n# Cellule d'import de librairie' \n");
-        if(context.get("pass") == PASS.ONE) {
-//            write("%s %s = %s;\n", variable.getType(), variable.getName(), variable.getValue());
-        }
     }
 
     @Override
     public void visit(ImportFunc importFunc) {
         write("\n# Cellule d'import de fonction' \n");
-        if(context.get("pass") == PASS.ONE) {
-//            write("%s %s = %s;\n", variable.getType(), variable.getName(), variable.getValue());
-        }
     }
 
     @Override
     public void visit(Comparison comparisonCode) {
 		write("\n# Cellule de comparaison des performances des algorithmes \n");
-        if(context.get("pass") == PASS.ONE) {
-//            write("%s %s = %s;\n", variable.getType(), variable.getName(), variable.getValue());
-        }
     }
 
 	@Override
 	public void visit(DataProcessing dataProcessing) {
-		write("\n# Cellule de traitement des données \n");
-		if(context.get("pass") == PASS.ONE) {
-//            write("%s %s = %s;\n", variable.getType(), variable.getName(), variable.getValue());
-		}
+        writeMarkDownCell("### %s\n",dataProcessing.getComment());
+        writeCodeCell("    \"# Data processing \"%s\\n\\n\"\n" +
+                "    \"%s\\n\"\n" +
+                "    \"%s\\n\"\n"+
+                "    \"%s\\n\"\n", dataProcessing.getDataAcquisition().getCode(), dataProcessing.getDataSelection().getCode(), dataProcessing.getPreprocessing().getCode());
 	}
 
     @Override
-    public void visit(Acquisition acquisition) {
-        write("\n# Cellule d'acquisition' des données \n");
-        if(context.get("pass") == PASS.ONE) {
-//            write("%s %s = %s;\n", variable.getType(), variable.getName(), variable.getValue());
-            if (acquisition.getSetName().isEmpty() || acquisition.getFilePath().isEmpty()){
-                write("%s = %s\n", acquisition.getSetName(), acquisition.getFilePath());
-            }
-            else {
-                write("Erreur ! Vous devez donner à la fois le nom du dataset et le chemin vers ce dernier\n");
-            }
-        }
-    }
+    public void visit(Acquisition acquisition) { }
 
     @Override
-    public void visit(Selection selection) {
-        write("\n# Cellule de sélection des données \n");
-        if(context.get("pass") == PASS.ONE) {
-            if (selection.getTestSize() == 0.0){
-                write("X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = %f, random_state = SEED)\n", selection.getTestSize());
-            }
-            else {
-                write("Erreur ! Vous devez définir une proportion du dataset à utiliser comme set de tests\n");
-            }
-
-        }
-    }
+    public void visit(Selection selection) { }
 
     @Override
-    public void visit(Preprocessing preprocessing) {
-        write("\n# Cellule de reshape et normalisation des données \n");
-        if(context.get("pass") == PASS.ONE) {
-            //            write("%s %s = %s;\n", variable.getType(), variable.getName(), variable.getValue());
-        }
-    }
+    public void visit(Preprocessing preprocessing) { }
 
     @Override
     public void visit(Visualization visualization) {
 
     }
-
 
     @Override
     public void visit(CNN cnn) {

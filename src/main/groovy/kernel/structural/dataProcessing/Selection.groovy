@@ -26,4 +26,9 @@ class Selection implements Visitable {
     void accept(Visitor<StringBuffer> visitor) {
         visitor.visit(this)
     }
+
+    String getCode() {
+        return String.format("\"# Data selection\\n\"\n" +
+                "    \"X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = %f, random_state = SEED)\\n\"\n",this.getTestSize());
+    }
 }

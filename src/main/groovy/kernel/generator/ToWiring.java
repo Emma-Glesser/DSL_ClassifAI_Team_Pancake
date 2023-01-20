@@ -111,6 +111,8 @@ public class ToWiring extends Visitor<StringBuffer> {
         }
         writeCodeCell(AlgorithmImports.PANDAS_IMPORT.getImports());
         writeCodeCell(AlgorithmImports.DATA_SELECTION_IMPORT.getImports());
+        writeCodeCell(AlgorithmImports.DATA_ACQUISTION_IMPORT.getImports());
+        writeCodeCell(AlgorithmImports.DATA_PREPROCESSING_IMPORT.getImports());
 
     }
 

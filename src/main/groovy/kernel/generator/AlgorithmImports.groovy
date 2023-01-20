@@ -22,7 +22,13 @@ enum AlgorithmImports {
             "    \"import pandas\\n\"\n"),
 
     DATA_SELECTION_IMPORT("    \"# Import for data selection\\n\",\n" +
-            "    \"from sklearn.model_selection import train_test_split\\n\"\n");
+            "    \"from sklearn.model_selection import train_test_split\\n\"\n"),
+
+    DATA_ACQUISTION_IMPORT("    \"# Import for data acquisition\\n\",\n" +
+            "    \"import pandas as pd\\n\"\n"),
+
+    DATA_PREPROCESSING_IMPORT("    \"# Import for data preprocessing\\n\",\n" +
+    "    \"import numpy as np\\n\"\n");
 
 
     private final String value

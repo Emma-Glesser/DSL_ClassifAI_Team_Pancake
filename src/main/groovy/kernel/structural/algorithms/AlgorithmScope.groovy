@@ -15,36 +15,36 @@ class AlgorithmScope {
         this.algorithms = new ArrayList<>()
     }
 
-    def cnn(String name, @DelegatesTo(strategy=Closure.DELEGATE_ONLY, value=CNN) Closure cl) {
+    CNN cnn(String name) {
         ClassifAIAlgorithm algo = new CNN()
         algo.name = name
-        algo.with(cl)
         ClassifAI_DSL_Binding.instance.setVariable(name, algo)
         this.algorithms.add(algo)
+        algo
     }
 
-    def svm(String name, @DelegatesTo(strategy=Closure.DELEGATE_ONLY, value=SVM) Closure cl) {
+    def svm(String name) {
         ClassifAIAlgorithm algo = new SVM()
         algo.name = name
-        algo.with(cl)
         ClassifAI_DSL_Binding.instance.setVariable(name, algo)
         this.algorithms.add(algo)
+        algo
     }
 
-    def knn(String name, @DelegatesTo(strategy=Closure.DELEGATE_ONLY, value=KNN) Closure cl) {
+    KNN knn(String name) {
         ClassifAIAlgorithm algo = new KNN()
         algo.name = name
-        algo.with(cl)
         ClassifAI_DSL_Binding.instance.setVariable(name, algo)
         this.algorithms.add(algo)
+        algo
     }
 
-    def randomForest(String name, @DelegatesTo(strategy=Closure.DELEGATE_ONLY, value=RandomForest) Closure cl) {
+    RandomForest randomForest(String name) {
         ClassifAIAlgorithm algo = new RandomForest()
         algo.name = name
-        algo.with(cl)
         ClassifAI_DSL_Binding.instance.setVariable(name, algo)
         this.algorithms.add(algo)
+        algo
     }
 
     List<ClassifAIAlgorithm> getAlgorithmList() {

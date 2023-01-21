@@ -371,7 +371,7 @@ public class ToWiring extends Visitor<StringBuffer> {
                         "    \"%s = cross_val_score(rand, X_train, Y_train, cv = 6)\\n\",\n"+
                         "    \"time2 = time.time()\\n\",\n"+
                         "    \"%s_time = time2-time1 * 1000.0\\n\",\n"+
-                        "    \"%s_acc = %s.mean()\"" ,randomForest.getNb_estimators(),randomForest.getName(),randomForest.getName(),randomForest.getName(),randomForest.getName()
+                        "    \"%s_acc = %s.mean()\"" ,randomForest.getNbEstimators(),randomForest.getName(),randomForest.getName(),randomForest.getName(),randomForest.getName()
         );
     }
 }

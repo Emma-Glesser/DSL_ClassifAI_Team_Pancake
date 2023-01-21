@@ -2,6 +2,7 @@ package kernel.structural.dataProcessing
 
 import kernel.generator.Visitor
 import kernel.structural.Code
+import kernel.structural.Invalid_DSL_SyntaxeException
 
 class DataProcessing extends Code {
 
@@ -20,7 +21,7 @@ class DataProcessing extends Code {
 
     def acquisition(@DelegatesTo(strategy = Closure.DELEGATE_ONLY, value = Acquisition) Closure cl) {
         if (acquisitionDone) {
-            throw new RuntimeException("Data acquisition can only be defined once")
+            throw new Invalid_DSL_SyntaxeException("Data acquisition can only be defined once")
         }
         Acquisition acquisition = new Acquisition()
         acquisition.with(cl)
@@ -30,10 +31,10 @@ class DataProcessing extends Code {
 
     def selection(@DelegatesTo(strategy = Closure.DELEGATE_ONLY, value = Selection) Closure cl) {
         if (!acquisitionDone) {
-            throw new RuntimeException("Data selection must be defined after data acquisition")
+            throw new Invalid_DSL_SyntaxeException("Data selection must be defined after data acquisition")
         }
         if (selectionDone) {
-            throw new RuntimeException("Data selection can only be defined once")
+            throw new Invalid_DSL_SyntaxeException("Data selection can only be defined once")
         }
         Selection selection = new Selection()
         selection.with(cl)
@@ -43,10 +44,10 @@ class DataProcessing extends Code {
 
     def preprocessing(@DelegatesTo(strategy = Closure.DELEGATE_ONLY, value = Preprocessing) Closure cl) {
         if (!acquisitionDone) {
-            throw new RuntimeException("Data preprocessing must be defined after data acquisition")
+            throw new Invalid_DSL_SyntaxeException("Data preprocessing must be defined after data acquisition")
         }
         if (!selectionDone) {
-            throw new RuntimeException("Data preprocessing must be defined after data selection")
+            throw new Invalid_DSL_SyntaxeException("Data preprocessing must be defined after data selection")
         }
         Preprocessing preprocessing = new Preprocessing()
         preprocessing.with(cl)
@@ -55,7 +56,7 @@ class DataProcessing extends Code {
 
     def visualizeDataset(String dataset) {
         if (!acquisitionDone) {
-            throw new RuntimeException("Dataset visualization must be defined after data acquisition")
+            throw new Invalid_DSL_SyntaxeException("Dataset visualization must be defined after data acquisition")
         }
         DatasetVisualization datasetVisualization = new DatasetVisualization(dataset)
         this.processingStepList.add(datasetVisualization)

@@ -1,6 +1,7 @@
 package kernel.structural.algorithms
 
 import kernel.generator.Visitor
+import kernel.structural.Invalid_DSL_SyntaxeException
 import kernel.structural.algorithms.layers.CNNLayer
 import kernel.structural.algorithms.layers.Convolution
 import kernel.structural.algorithms.layers.Dense
@@ -25,14 +26,14 @@ class CNN extends ClassifAIAlgorithm {
 
     int getEpochs() {
         if (epochs <= 0) {
-            throw new RuntimeException("Epochs must be greater than 0")
+            throw new Invalid_DSL_SyntaxeException("Epochs must be greater than 0")
         }
         return epochs
     }
 
     int getBatchSize() {
         if (batch_size <= 0) {
-            throw new RuntimeException("Batch size must be greater than 0")
+            throw new Invalid_DSL_SyntaxeException("Batch size must be greater than 0")
         }
         return batch_size
     }
@@ -74,5 +75,11 @@ class CNN extends ClassifAIAlgorithm {
         CNNLayer layer = new Dense()
         layer.with(cl)
         this.layers.add(layer)
+    }
+
+    def definedAs(@DelegatesTo(strategy=Closure.DELEGATE_ONLY, value=CNN) Closure cl) {
+        Closure code = cl.rehydrate(this, this, this)
+        code.resolveStrategy = Closure.DELEGATE_ONLY
+        code()
     }
 }

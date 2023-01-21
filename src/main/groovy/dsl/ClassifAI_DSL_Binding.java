@@ -4,6 +4,7 @@ import java.util.Map;
 
 import groovy.lang.Binding;
 import groovy.lang.Script;
+import kernel.structural.Invalid_DSL_SyntaxeException;
 
 public class ClassifAI_DSL_Binding extends Binding {
 	// can be useful to return the script in case of syntax trick
@@ -48,7 +49,7 @@ public class ClassifAI_DSL_Binding extends Binding {
             super.setVariable(name, value);
             return;
         }
-        throw new RuntimeException("Already existing identifiers : " + name);
+        throw new Invalid_DSL_SyntaxeException("Already existing identifiers : " + name);
     }
 	
 	public ClassifAI_DSL_Model getClassifAI_DSLModel() {

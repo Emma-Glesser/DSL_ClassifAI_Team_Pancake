@@ -34,7 +34,6 @@ public abstract class Visitor<T> {
 	public abstract void visit(Selection selection);
 	public abstract void visit(Preprocessing preprocessing);
 	public abstract void visit(Visualization visualization);
-
     public abstract void visit(CNN cnn);
     public abstract void visit(SVM svm);
     public abstract void visit(KNN knn);

@@ -2,13 +2,16 @@ package kernel.generator
 
 enum AlgorithmImports {
     SVM_IMPORT( "    \"# Imports for SVM Algorithm\\n\",\n" +
-                "    \"from sklearn.model_selection import GridSearchCV\\n\",\n"),
+                "    \"from sklearn.model_selection import cross_val_score\\n\",\n"+
+                "    \"from sklearn.model_selection import LinearSVC\\n\",\n"),
 
     KNN_IMPORT( "    \"# Imports for KNN Algorithm\\n\",\n" +
+                "    \"from sklearn.model_selection import cross_val_score\\n\",\n"+
                 "    \"from sklearn.neighbors import KNeighborsClassifier\\n\",\n" +
                 "    \"from sklearn.metrics import accuracy_score"),
 
     RANDOM_FOREST_IMPORT(   "    \"# Imports for Random Forest Algorithm\\n\",\n" +
+                            "    \"from sklearn.model_selection import cross_val_score\\n\",\n"+
                             "    \"from sklearn.ensemble import RandomForestClassifier\\n\",\n" +
                             "    \"from sklearn.metrics import accuracy_score"),
 
@@ -28,7 +31,11 @@ enum AlgorithmImports {
             "    \"import pandas as pd\\n\"\n"),
 
     DATA_PREPROCESSING_IMPORT("    \"# Import for data preprocessing\\n\",\n" +
-            "    \"import numpy as np\\n\"\n");
+            "    \"import numpy as np\\n\"\n"),
+
+    DATA_VISUALISATION_IMPORT("    \"# Import for data visualization\\n\",\n"+
+            "    \"import matplotlib.pyplot as plt\\n\",\n"+
+            "    \"import time\\n\",\n");
 
 
     private final String value

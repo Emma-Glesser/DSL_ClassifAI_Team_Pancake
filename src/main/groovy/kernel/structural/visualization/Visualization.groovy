@@ -39,6 +39,10 @@ class Visualization extends Code {
         this.comparison = comparison
     }
 
+    ClassifAI_DSL.Param getComparison_factor(){
+        return comparison;
+    }
+
     @Override
     void accept(Visitor<StringBuffer> visitor) {
         visitor.visit(this)

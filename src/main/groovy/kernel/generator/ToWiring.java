@@ -1,5 +1,6 @@
 package kernel.generator;
 
+import dsl.ClassifAI_DSL;
 import dsl.ClassifAI_DSL_Binding;
 import kernel.App;
 import kernel.structural.*;
@@ -113,7 +114,7 @@ public class ToWiring extends Visitor<StringBuffer> {
         writeCodeCell(AlgorithmImports.DATA_SELECTION_IMPORT.getImports());
         writeCodeCell(AlgorithmImports.DATA_ACQUISTION_IMPORT.getImports());
         writeCodeCell(AlgorithmImports.DATA_PREPROCESSING_IMPORT.getImports());
-
+        writeCodeCell(AlgorithmImports.DATA_VISUALISATION_IMPORT.getImports());
     }
 
 	@Override
@@ -198,6 +199,37 @@ public class ToWiring extends Visitor<StringBuffer> {
 
     @Override
     public void visit(Visualization visualization) {
+        writeMarkDownCell("### %s\n",visualization.getComment());
+
+
+        if(visualization.getComparison_factor() == ClassifAI_DSL.Param.Accuracy){
+
+            StringBuilder names = new StringBuilder();
+            StringBuilder accuracyVar = new StringBuilder();
+            names.append("    \"names=[");
+            accuracyVar.append("    \"acc=[");
+            for(String name : visualization.getAlgorithmNames()){
+                names.append(String.format("%s,", name));
+                accuracyVar.append(String.format("%s.mean(),", name));
+            }
+            names.deleteCharAt(names.lastIndexOf(","));
+            names.append("]\\n\"\n");
+
+            accuracyVar.deleteCharAt(accuracyVar.lastIndexOf(","));
+            accuracyVar.append("]\\n\"\n");
+
+            writeCodeCell(names.toString() +
+                                accuracyVar.toString() +
+                                "    \"plt.figure(figsize=(10,8))\\n\",\n" +
+                                "    \"graph = plt.barh(names,acc)\n\\n\",\n" +
+                                "    \"plt.xlabel('Accuracy')\\n\",\n" +
+                                "    \" plt.ylabel('Models')\""
+                    );
+        }
+
+        if(visualization.getComparison_factor() == ClassifAI_DSL.Param.ExecTime){
+
+        }
 
     }
 
@@ -242,15 +274,10 @@ public class ToWiring extends Visitor<StringBuffer> {
                 "### %s\n"+
                         "\n"+
                         "%s",svm.getName(),svm.getComment());
-
-        // Code de vincent SVM
+// https://www.kaggle.com/code/adoumtaiga/comparing-ml-models-for-classification
         writeCodeCell(
-                "\"param_grid = {'C': [0.001, 0.01, 0.1, 1, 10, 100, 1000],\\n\"\n" +
-                        "\"              'gamma': [1, 0.1, 0.01, 0.001, 0.0001],\\n\"\n" +
-                        "\"              'kernel': ['poly']}\\n\"\n" +
-                        "\"classifier  = GridSearchCV(SVC(), param_grid, refit = True, verbose = 3)\\n\"\n" +
-                        "\"classifier.fit(X_train, Y_train)\\n\"\n" +
-                        "\"classifier.score(X_test, Y_test)\""
+                "    \"sv = LinearSVC(C=0.0001)\\n\"\n" +
+                      "    \"%s = cross_val_score(sv, X_train, Y_train, cv = 8)\"", svm.getName()
         );
     }
 
@@ -260,13 +287,10 @@ public class ToWiring extends Visitor<StringBuffer> {
                 "### %s\n"+
                         "\n"+
                         "%s",knn.getName(),knn.getComment());
-
-        // Code de vincent knn
+// https://www.kaggle.com/code/adoumtaiga/comparing-ml-models-for-classification
         writeCodeCell(
-                " \"classifier = KNeighborsClassifier(n_neighbors=%s)\\n\"\n" +
-                        "  \"classifier = classifier.fit(X_train, Y_train)\\n\"\n" +
-                        "  \"pred = classifier.predict(X_test)\\n\"\n" +
-                        "  \"accuracy = accuracy_score(Y_test, pred)\\n\"",knn.getK()
+                "    \"knn = KNeighborsClassifier(n_neighbors=%s)\\n\"\n" +
+                      "    \"%s = cross_val_score(knn, X_train, Y_train, cv = 8)\"" , knn.getName(),knn.getK()
         );
     }
 
@@ -276,11 +300,10 @@ public class ToWiring extends Visitor<StringBuffer> {
                 "### %s\n"+
                         "\n"+
                         "%s",randomForest.getName(),randomForest.getComment());
+// https://www.kaggle.com/code/adoumtaiga/comparing-ml-models-for-classification
         writeCodeCell(
-                " \"classifier = RandomForestClassifier(n_estimators=%s)\\n\"\n" +
-                        "  \"classifier = classifier.fit(X_train, Y_train)\\n\"\n" +
-                        "  \"pred = classifier.predict(X_test)\\n\"\n" +
-                        "  \"accuracy = accuracy_score(Y_test, pred)\"",randomForest.getNb_estimators()
+                " \"rand = RandomForestClassifier(n_estimators=%s, max_depth=10)\\n\"\n" +
+                        "  \"%s = cross_val_score(rand, X_train, Y_train, cv = 6)\"",randomForest.getName(),randomForest.getNb_estimators()
         );
     }
 }

@@ -26,7 +26,7 @@ class Visualization extends Code {
             try {
                 ClassifAI_DSL_Binding.instance.getVariable(algorithmName)
             } catch (Exception ignored) {
-                throw new RuntimeException("Algorithm " + algorithmName + " is not defined")
+                throw new RuntimeException("Algorithm " + algorithmName + " is not defined. Can't visualize it")
             }
         }
         this.algorithmsToVisualize = algorithmsToVisualize

@@ -29,12 +29,12 @@ class Preprocessing extends ProcessingStep {
     String getCode() {
         String preprocessing = new String()
         if(reshape != null) {
-            String reshapeLine = String.format("X_train = X_train.values.reshape(-1, %i,%i,%i)\n" +
-                    "X_val = X_val.values.reshape(-1, %i,%i,%i)\n", reshape[0], reshape[1], reshape[2], reshape[0], reshape[1], reshape[2])
+            String reshapeLine = String.format("X_train = X_train.values.reshape(-1, %d,%d,%d)\n" +
+                    "X_val = X_val.values.reshape(-1, %d,%d,%d)\n", reshape[0], reshape[1], reshape[2], reshape[0], reshape[1], reshape[2])
             preprocessing += reshapeLine
         }
         if(normalize != null) {
-            String normalizeLine = String.format("X_train = X_train/(%i))\n" , normalize)
+            String normalizeLine = String.format("X_train = X_train/(%d))\n" , normalize)
             preprocessing += normalizeLine
         }
         return String.format("\"# Data preprocessing : reshape and normalization\\n\"\n", preprocessing)

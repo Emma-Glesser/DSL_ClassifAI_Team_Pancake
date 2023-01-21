@@ -8,7 +8,7 @@ program "test" being {
             setName = "bonjour"
         }
         selection {
-            testSize = 12
+            testSize = 0.2
             shuffleData = false
         }
         preprocessing {
@@ -20,18 +20,18 @@ program "test" being {
     }
 
     algorithms {
-        randomForest "test", {
+        randomForest "randomForest", {
             nb_estimators = 5
         }
 
-        svm "test2" , {
+        svm "svm" , {
         }
 
-        knn "test_knn", {
+        knn "knn", {
             k = 5
         }
 
-        cnn "test" , {
+        cnn "cnn" , {
             epochs = 12
             batch_size = 15
 
@@ -59,6 +59,6 @@ program "test" being {
 
     visualization {
         comparison = Param.Accuracy
-        algorithmsToVisualize = ["test", "test2"]
+        algorithmsToVisualize = ["knn", "svm"]
     }
 }

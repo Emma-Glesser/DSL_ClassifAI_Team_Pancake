@@ -91,18 +91,36 @@ class Program implements NamedElement, Visitable {
     }
 
     List<ClassifAIAlgorithm> getAlgorithms() {
+        if (algorithmList == null) {
+            throw new RuntimeException("Algorithms must be defined")
+        }
         algorithmList
     }
 
     DataProcessing getDataProcessing() {
+        if (dataProcessing == null) {
+            throw new RuntimeException("Data processing must be defined")
+        }
         dataProcessing
     }
 
     Visualization getVisualization() {
+        if (visualization == null) {
+            throw new RuntimeException("Visualization must be defined")
+        }
         visualization
     }
 
     Comparison getComparison() {
+        if (comparison == null) {
+            throw new RuntimeException("Comparison must be defined")
+        }
         comparison
+    }
+
+    def being (@DelegatesTo(strategy=Closure.DELEGATE_ONLY, value=Program) Closure cl) {
+        Closure code = cl.rehydrate(this, this, this)
+        code.resolveStrategy = Closure.DELEGATE_ONLY
+        code()
     }
 }

@@ -1,9 +1,12 @@
 package dsl
 
 import groovy.transform.TypeChecked
+import kernel.structural.Program
 import kernel.structural.ProgramBeing
 import org.codehaus.groovy.control.CompilerConfiguration
 import org.codehaus.groovy.control.customizers.SecureASTCustomizer
+import org.codehaus.groovy.syntax.Types
+
 
 class ClassifAI_DSL {
     private GroovyShell shell
@@ -32,14 +35,14 @@ class ClassifAI_DSL {
             //language tokens disallowed
 //			tokensBlacklist= []
             //language tokens allowed
-            tokensWhitelist= []
+            tokensWhitelist= [Types.EQUAL]
             //types allowed to be used  (including primitive types)
             constantTypesClassesWhiteList= [
-                    int, Integer, Number, String, boolean, Object
+                    int, Integer, Number, String, boolean, Object, Param, Padding, ActivationFunction, BigDecimal
             ]
             //classes who are allowed to be receivers of method calls
             receiversClassesWhiteList= [
-                    int, Integer, Number, String, boolean, Object
+                    int, Integer, Number, String, boolean, Object, Param, Padding, ActivationFunction, BigDecimal
             ]
         }
 
@@ -49,7 +52,7 @@ class ClassifAI_DSL {
         return configuration
     }
 
-    static ProgramBeing program(String _) {
+    static Program program(String _) {
         // Note: this is a static method to import in scripts
         return null
     }

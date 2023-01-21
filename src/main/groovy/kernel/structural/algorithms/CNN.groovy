@@ -15,6 +15,10 @@ class CNN extends ClassifAIAlgorithm {
     public int epochs
     public int batch_size
 
+    CNN() {
+        this.layers = new ArrayList<>()
+    }
+
     List<CNNLayer> getLayers() {
         return layers
     }

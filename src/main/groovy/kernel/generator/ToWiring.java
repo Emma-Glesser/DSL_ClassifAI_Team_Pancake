@@ -185,7 +185,7 @@ public class ToWiring extends Visitor<StringBuffer> {
         for (ProcessingStep processingStep : dataProcessing.getProcessingStepList()) {
             dataProcessingBuilder.append(String.format( "    \"%s\\n\"\n", processingStep.getCode()));
         }
-        writeCodeCell("    \"# Data processing \"%s\\n\\n\"\n" + dataProcessingBuilder);
+        writeCodeCell(String.format("    \"# Data processing \"%s\\n\\n\"\n" + dataProcessingBuilder, dataProcessing.getComment()));
     }
 
     @Override

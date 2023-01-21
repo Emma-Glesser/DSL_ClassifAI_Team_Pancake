@@ -28,7 +28,9 @@ class Selection extends ProcessingStep {
 
     String getCode() {
         return String.format("\"# Data selection\\n\",\n" +
-                "    \"X_train, X_test, Y_train, Y_test = train_test_split(X, y, test_size = %f, shuffle=%s)\\n\\n\"",
+                "    \"Y = dataset[\'label\']\\n\",\n" +
+                "    \"X = dataset.drop(columns=[\'label\'])\\n\",\n" +
+                "    \"X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size = %f, shuffle=%s)\\n\\n\"",
                 this.getTestSize(), this.getShuffleData() ? "True" : "False")
     }
 }

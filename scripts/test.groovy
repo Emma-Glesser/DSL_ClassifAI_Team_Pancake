@@ -6,7 +6,6 @@ program "test" being {
         comment "machin chouette"
         acquisition {
             filePath = "test"
-            setName = "bonjour"
         }
         selection {
             testSize = 0.2
@@ -25,14 +24,14 @@ program "test" being {
             nb_estimators = 5
         }
 
-        svm "svm" , {
+        svm "SVM" , {
         }
 
-        knn "knn", {
+        knn "KNN", {
             k = 5
         }
 
-        cnn "cnn" , {
+        cnn "CNN" , {
             epochs = 12
             batch_size = 15
 
@@ -60,6 +59,6 @@ program "test" being {
 
     visualization {
         comparison = Param.Accuracy
-        algorithmsToVisualize = ["knn", "svm"]
+        algorithmsToVisualize = ["KNN", "SVM"]
     }
 }

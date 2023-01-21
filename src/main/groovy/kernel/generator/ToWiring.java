@@ -206,8 +206,14 @@ public class ToWiring extends Visitor<StringBuffer> {
 
     @Override
     public void visit(Visualization visualization) {
-        writeMarkDownCell("    \"### %s\"",visualization.getComment());
-
+        if (visualization.getComment() != null) {
+            writeMarkDownCell(
+                    "    \"### Data visualization\\n\",\n"+
+                            "    \"\\n\",\n"+
+                            "    \"%s\"", visualization.getComment());
+        } else {
+            writeMarkDownCell("    \"### Data visualization\"");
+        }
 
         if(visualization.getComparison_factor() == ClassifAI_DSL.Param.Accuracy){
             StringBuilder names = new StringBuilder();
@@ -261,11 +267,15 @@ public class ToWiring extends Visitor<StringBuffer> {
 
     @Override
     public void visit(CNN cnn) {
-        writeMarkDownCell(
-                        "    \"### %s\\n\",\n"+
-                        "    \"\\n\",\n"+
-                        "    \"%s\"", cnn.getName(), cnn.getComment());
-
+        if (cnn.getComment() != null) {
+            writeMarkDownCell(
+                    "    \"### %s\\n\",\n"+
+                            "    \"\\n\",\n"+
+                            "    \"%s\"", cnn.getName(), cnn.getComment());
+        } else {
+            writeMarkDownCell(
+                    "    \"### %s\"", cnn.getName());
+        }
 
         StringBuilder cnnBuilder = new StringBuilder();
 
@@ -279,7 +289,7 @@ public class ToWiring extends Visitor<StringBuffer> {
 
         List<CNNLayer> layers = cnn.getLayers();
         for (int i = 0; i < layers.size(); i++) {
-            cnnBuilder.append(String.format("    \"%s\\n\",\n",layers.get(i).getCode(i)));
+            cnnBuilder.append(String.format("    \"%s\\n\",\n",layers.get(i).getCode(i+1)));
         }
 
         cnnBuilder.append(String.format(
@@ -289,7 +299,7 @@ public class ToWiring extends Visitor<StringBuffer> {
                                 "    \"# compiling and fitting the model\\n\",\n" +
                                 "    \"time1 = time.time()\\n\",\n" +
                                 "    \"model.compile(optimizer='rmsprop',loss='categorical_crossentropy',metrics=['accuracy'])\\n\",\n" +
-                                "    \"history = model.fit(X_train,y_train,epochs=%d,batch_size=%d,validation_data=(X_test,y_test))\\n\",\n"+
+                                "    \"history = model.fit(X_train,Y_train,epochs=%d,batch_size=%d,validation_data=(X_test,Y_test))\\n\",\n"+
                                 "    \"time2 = time.time()\\n\",\n"+
                                 "    \"%s_acc = history.history[\'accuracy\']\\n\",\n"+
                                 "    \"%s_time = time2-time1 * 1000.0\"" ,layers.size(), cnn.getEpochs(), cnn.getBatchSize(), cnn.getName(), cnn.getName())
@@ -300,10 +310,16 @@ public class ToWiring extends Visitor<StringBuffer> {
 
     @Override
     public void visit(SVM svm) {
-        writeMarkDownCell(
-                "    \"### %s\\n\",\n"+
-                        "    \"\\n\",\n"+
-                        "    \"%s\"", svm.getName(), svm.getComment());
+        if (svm.getComment() != null) {
+            writeMarkDownCell(
+                    "    \"### %s\\n\",\n"+
+                            "    \"\\n\",\n"+
+                            "    \"%s\"", svm.getName(), svm.getComment());
+        } else {
+            writeMarkDownCell(
+                    "    \"### %s\"", svm.getName());
+        }
+
 // https://www.kaggle.com/code/adoumtaiga/comparing-ml-models-for-classification
         writeCodeCell(
                     "    \"time1 = time.time()\\n\",\n" +
@@ -317,10 +333,15 @@ public class ToWiring extends Visitor<StringBuffer> {
 
     @Override
     public void visit(KNN knn) {
-        writeMarkDownCell(
-                "    \"### %s\\n\",\n"+
-                        "    \"\\n\",\n"+
-                        "    \"%s\"", knn.getName(), knn.getComment());
+        if (knn.getComment() != null) {
+            writeMarkDownCell(
+                    "    \"### %s\\n\",\n"+
+                            "    \"\\n\",\n"+
+                            "    \"%s\"", knn.getName(), knn.getComment());
+        } else {
+            writeMarkDownCell(
+                    "    \"### %s\"", knn.getName());
+        }
 // https://www.kaggle.com/code/adoumtaiga/comparing-ml-models-for-classification
         writeCodeCell(
                     "    \"time1 = time.time()\\n\",\n" +
@@ -334,10 +355,15 @@ public class ToWiring extends Visitor<StringBuffer> {
 
     @Override
     public void visit(RandomForest randomForest) {
-        writeMarkDownCell(
-                "    \"### %s\\n\",\n"+
-                        "    \"\\n\",\n"+
-                        "    \"%s\"", randomForest.getName(), randomForest.getComment());
+        if (randomForest.getComment() != null) {
+            writeMarkDownCell(
+                    "    \"### %s\\n\",\n"+
+                            "    \"\\n\",\n"+
+                            "    \"%s\"", randomForest.getName(), randomForest.getComment());
+        } else {
+            writeMarkDownCell(
+                    "    \"### %s\"", randomForest.getName());
+        }
 // https://www.kaggle.com/code/adoumtaiga/comparing-ml-models-for-classification
         writeCodeCell(
                     "    \"time1 = time.time()\\n\",\n" +

@@ -32,6 +32,6 @@ class Dense extends CNNLayer {
         if (activation_function == null) {
             throw new RuntimeException("Dense layer should have an activation function")
         }
-        return String.format("x%i = Dense(%i, activation='%s')(x%i)", layerNumber, units, activation_function.toString().toLowerCase(), layerNumber-1)
+        return String.format("x%d = Dense(%d, activation='%s')(x%d)", layerNumber, units, activation_function.toString().toLowerCase(), layerNumber-1)
     }
 }

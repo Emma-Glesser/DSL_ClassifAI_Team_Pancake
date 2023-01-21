@@ -24,6 +24,6 @@ class Pooling extends CNNLayer{
         if (strides[0] < 1 || strides[1] < 1) {
             throw new RuntimeException("Pooling layer strides should be greater than 0")
         }
-        return String.format("x%i = MaxPooling2D(pool_size=(%i, %i), strides=(%i, %i))(x%i)", layerNumber, 2, 2, strides[0], strides[1], layerNumber-1)
+        return String.format("x%d = MaxPooling2D(pool_size=(%d, %d), strides=(%d, %d))(x%d)", layerNumber, 2, 2, strides[0], strides[1], layerNumber-1)
     }
 }

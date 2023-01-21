@@ -4,6 +4,6 @@ class Normalization extends CNNLayer {
 
     @Override
     String getCode(int layerNumber) {
-        return String.format("x%i = Normalization()(x%i)", layerNumber, layerNumber-1)
+        return String.format("x%d = Normalization()(x%d)", layerNumber, layerNumber-1)
     }
 }

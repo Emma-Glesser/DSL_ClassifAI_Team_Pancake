@@ -60,6 +60,6 @@ class Convolution extends CNNLayer{
         if (padding == null) {
             return String.format("x%d = Conv2D(%d, (%d, %d), activation='%s')(x%d)", layerNumber, filters, kernelSize[0], kernelSize[1], activationFunction.toString().toLowerCase(), layerNumber - 1)
         }
-        return String.format("x%i = Conv2D(%i, kernel_size=(%i, %i), activation='%s', padding='%s')(x%i)", layerNumber, filters, kernelSize[0], kernelSize[1], activationFunction.toString().toLowerCase(), padding.toString().toLowerCase(), layerNumber-1)
+        return String.format("x%d = Conv2D(%d, kernel_size=(%d, %d), activation='%s', padding='%s')(x%d)", layerNumber, filters, kernelSize[0], kernelSize[1], activationFunction.toString().toLowerCase(), padding.toString().toLowerCase(), layerNumber-1)
     }
 }

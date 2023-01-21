@@ -18,7 +18,7 @@ enum AlgorithmImports {
     CNN_IMPORT( "    \"# Imports for CNN Algorithm\\n\",\n" +
                 "    \"from keras import Input\\n\",\n" +
                 "    \"from keras.models import Model\\n\",\n" +
-                "    \"from keras.layers import Conv2D, Dense, Dropout, Flatten, MaxPooling2D, Normalization\\n\",\n" +
+                "    \"from keras.layers import Conv2D, Dense, Dropout, Flatten, MaxPooling2D, BatchNormalization\\n\",\n" +
                 "    \"from tensorflow.keras.utils import to_categorical\""),
 
     DATA_SELECTION_IMPORT("    \"# Import for data selection\\n\",\n" +

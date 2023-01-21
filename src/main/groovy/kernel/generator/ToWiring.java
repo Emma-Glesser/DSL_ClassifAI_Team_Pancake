@@ -299,10 +299,13 @@ public class ToWiring extends Visitor<StringBuffer> {
                                 "    \"# compiling and fitting the model\\n\",\n" +
                                 "    \"time1 = time.time()\\n\",\n" +
                                 "    \"model.compile(optimizer='rmsprop',loss='categorical_crossentropy',metrics=['accuracy'])\\n\",\n" +
-                                "    \"history = model.fit(X_train,Y_train,epochs=%d,batch_size=%d,validation_data=(X_test,Y_test))\\n\",\n"+
+                                "    \"history = model.fit(X_train_CNN,Y_train_CNN,epochs=%d,batch_size=%d,validation_data=(X_test_CNN,Y_test_CNN))\\n\",\n"+
                                 "    \"time2 = time.time()\\n\",\n"+
-                                "    \"%s_acc = history.history[\'accuracy\']\\n\",\n"+
-                                "    \"%s_time = time2-time1 * 1000.0\"" ,layers.size(), cnn.getEpochs(), cnn.getBatchSize(), cnn.getName(), cnn.getName())
+                                "    \"%s_acc = 0\\n\",\n"+
+                                "    \"for acc in history.history[\'accuracy\'] :\\n\",\n"+
+                                "    \"    %s_acc += acc\\n\",\n"+
+                                "    \"%s_acc = %s_acc/len(history.history[\'accuracy\'])\\n\",\n"+
+                                "    \"%s_time = time2-time1 * 1000.0\"" ,layers.size(), cnn.getEpochs(), cnn.getBatchSize(), cnn.getName(), cnn.getName(), cnn.getName(), cnn.getName(), cnn.getName())
         );
 
         writeCodeCell(cnnBuilder.toString());

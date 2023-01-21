@@ -18,6 +18,6 @@ class Dropout extends CNNLayer{
         if (rateOfDisabledNeurons < 0 || rateOfDisabledNeurons > 1) {
             throw new RuntimeException("Dropout layer should have a rate_of_disabled_neurons value between 0 and 1")
         }
-        return String.format("x%d = Dropout(%f)(x%d)", layerNumber, rateOfDisabledNeurons, layerNumber-1)
+        return String.format(Locale.US,"x%d = Dropout(%.2f)(x%d)", layerNumber, rateOfDisabledNeurons, layerNumber-1)
     }
 }

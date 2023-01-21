@@ -5,14 +5,14 @@ program "test" being {
     dataProcessing {
         comment "machin chouette"
         acquisition {
-            filePath = "test"
+            filePath = "/data/workspace_files/mnist_test.csv"
         }
         selection {
             testSize = 0.2
             shuffleData = false
         }
         preprocessing {
-            reshape = [1, 16, 16]
+            reshape = [28, 28, 1]
             normalize = 6
         }
 
@@ -34,25 +34,36 @@ program "test" being {
         cnn "CNN" , {
             epochs = 12
             batch_size = 15
-
-            normalizationLayer()
             convolutionLayer {
                 filters = 32
-                kernelSize = [3, 3]
+                kernelSize = [5, 5]
                 padding = Padding.SAME
                 activationFunction = ActivationFunction.RELU
             }
-            dropoutLayer {
-                rateOfDisabledNeurons = 0.5
+
+            normalizationLayer()
+
+            convolutionLayer {
+                filters = 32
+                kernelSize = [5, 5]
+                padding = Padding.SAME
+                activationFunction = ActivationFunction.RELU
             }
+
+            normalizationLayer()
+
             poolingLayer {
-                strides = [5,5]
+                strides = [2,2]
+            }
+
+            dropoutLayer {
+                rateOfDisabledNeurons = 0.25
             }
             flattenLayer()
 
             denseLayer {
-                units = 5
-                activation_function = ActivationFunction.RELU
+                units = 10
+                activation_function = ActivationFunction.SOFTMAX
             }
         }
     }

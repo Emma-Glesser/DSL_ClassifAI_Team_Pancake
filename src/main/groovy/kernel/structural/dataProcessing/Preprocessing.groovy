@@ -27,20 +27,23 @@ class Preprocessing extends ProcessingStep {
     }
 
     String getCode() {
-        String preprocessing = new String()
+        String preprocessing = "    \"X_train_CNN, X_test_CNN, Y_train_CNN, Y_test_CNN = X_train, X_test, Y_train, Y_test\\n\",\n";
         if(reshape != null) {
-            String reshapeLine = String.format("    \"X_train = X_train.values.reshape(-1, %d,%d,%d)\\n\",\n" +
-                    "    \"X_test = X_test.values.reshape(-1, %d,%d,%d)\\n\"", reshape[0], reshape[1], reshape[2], reshape[0], reshape[1], reshape[2])
+            String reshapeLine = String.format("    \"X_train_CNN = X_train_CNN.values.reshape(-1, %d,%d,%d)\\n\",\n" +
+                    "    \"X_test_CNN = X_test_CNN.values.reshape(-1, %d,%d,%d)\\n\"", reshape[0], reshape[1], reshape[2], reshape[0], reshape[1], reshape[2])
             preprocessing += reshapeLine
         }
         if(reshape != null && normalize != null) {
             preprocessing += "\n,\n";
         }
         if(normalize != null) {
-            String normalizeLine = String.format("    \"X_train = X_train/(%d)\\n\",\n" +
-                    "    \"X_test = X_test/(%d)\\n\"", normalize, normalize)
+            String normalizeLine = String.format("    \"X_train_CNN = X_train_CNN/(%d)\\n\",\n" +
+                    "    \"X_test_CNN = X_test_CNN/(%d)\\n\"\n,\n", normalize, normalize)
             preprocessing += normalizeLine
         }
-        return String.format("\"# Data preprocessing : reshape and normalization\\n\",\n%s", preprocessing);
+        preprocessing += String.format("    \"Y_train_CNN = pd.get_dummies(Y_train_CNN).values\\n\",\n" +
+                "    \"Y_test_CNN = pd.get_dummies(Y_test_CNN).values\\n\"");
+
+        return String.format("\"# Data preprocessing for CNN : reshape and normalization\\n\",\n%s",preprocessing);
     }
 }

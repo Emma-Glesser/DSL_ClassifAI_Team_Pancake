@@ -3,7 +3,7 @@ package kernel.generator
 enum AlgorithmImports {
     SVM_IMPORT( "    \"# Imports for SVM Algorithm\\n\",\n" +
                 "    \"from sklearn.model_selection import cross_val_score\\n\",\n"+
-                "    \"from sklearn.model_selection import LinearSVC\""),
+                "    \"from sklearn.svm import LinearSVC\""),
 
     KNN_IMPORT( "    \"# Imports for KNN Algorithm\\n\",\n" +
                 "    \"from sklearn.model_selection import cross_val_score\\n\",\n"+
@@ -20,9 +20,6 @@ enum AlgorithmImports {
                 "    \"from keras.models import Model\\n\",\n" +
                 "    \"from keras.layers import Conv2D, Dense, Dropout, Flatten, MaxPooling2D, Normalization\\n\",\n" +
                 "    \"from tensorflow.keras.utils import to_categorical\""),
-
-    PANDAS_IMPORT("    \"# Import for Pandas\\n\",\n" +
-            "    \"import panda\""),
 
     DATA_SELECTION_IMPORT("    \"# Import for data selection\\n\",\n" +
             "    \"from sklearn.model_selection import train_test_split\""),

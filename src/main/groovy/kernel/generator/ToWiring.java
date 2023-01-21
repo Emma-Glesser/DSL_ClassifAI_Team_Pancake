@@ -221,7 +221,7 @@ public class ToWiring extends Visitor<StringBuffer> {
             names.append("    \"names=[");
             accuracyVar.append("    \"acc=[");
             for(String name : visualization.getAlgorithmNames()){
-                names.append(String.format("%s,", name));
+                names.append(String.format("\'%s\',", name));
                 accuracyVar.append(String.format("%s_acc,", name));
             }
             names.deleteCharAt(names.lastIndexOf(","));
@@ -245,7 +245,7 @@ public class ToWiring extends Visitor<StringBuffer> {
             names.append("    \"names=[");
             time.append("    \"times=[");
             for(String name : visualization.getAlgorithmNames()){
-                names.append(String.format("%s,", name));
+                names.append(String.format("\'%s\',", name));
                 time.append(String.format("%s_time,", name));
             }
             names.deleteCharAt(names.lastIndexOf(","));

@@ -209,7 +209,7 @@ public class ToWiring extends Visitor<StringBuffer> {
             accuracyVar.append("    \"acc=[");
             for(String name : visualization.getAlgorithmNames()){
                 names.append(String.format("%s,", name));
-                accuracyVar.append(String.format("%s.mean(),", name));
+                accuracyVar.append(String.format("%s_acc,", name));
             }
             names.deleteCharAt(names.lastIndexOf(","));
             names.append("]\\n\"\n");
@@ -222,7 +222,7 @@ public class ToWiring extends Visitor<StringBuffer> {
                                 "    \"plt.figure(figsize=(10,8))\\n\",\n" +
                                 "    \"graph = plt.barh(names,acc)\n\\n\",\n" +
                                 "    \"plt.xlabel('Accuracy')\\n\",\n" +
-                                "    \" plt.ylabel('Models')\""
+                                "    \"plt.ylabel('Models')\""
                     );
         }
 
@@ -246,7 +246,7 @@ public class ToWiring extends Visitor<StringBuffer> {
                     "    \"plt.figure(figsize=(10,8))\\n\",\n" +
                     "    \"graph = plt.barh(names,acc)\n\\n\",\n" +
                     "    \"plt.xlabel('Execution Time')\\n\",\n" +
-                    "    \" plt.ylabel('Models')\""
+                    "    \"plt.ylabel('Models')\""
             );
         }
 
@@ -255,9 +255,9 @@ public class ToWiring extends Visitor<StringBuffer> {
     @Override
     public void visit(CNN cnn) {
         writeMarkDownCell(
-                "### %s\n"+
-                        "\n"+
-                        "%s", cnn.getName(), cnn.getComment());
+                        "    \"### %s\\n\",\n"+
+                        "    \"\\n\",\n"+
+                        "    \"%s\"", cnn.getName(), cnn.getComment());
 
 
         StringBuilder cnnBuilder = new StringBuilder();
@@ -276,12 +276,16 @@ public class ToWiring extends Visitor<StringBuffer> {
         }
 
         cnnBuilder.append(String.format(
-                        "    \"\\n\",\n" +
-                        "    \"model=Model(inputs=x0,outputs=x%d)\\n\",\n" +
-                        "    \"\\n\",\n" +
-                        "    \"# compiling and fitting the model\\n\",\n" +
-                        "    \"model.compile(optimizer='rmsprop',loss='categorical_crossentropy',metrics=['accuracy'])\\n\",\n" +
-                        "    \"model.fit(X_train,y_train,epochs=%d,batch_size=%d,validation_data=(X_test,y_test))\"",layers.size(), cnn.getEpochs(), cnn.getBatchSize())
+                                "    \"\\n\",\n" +
+                                "    \"model=Model(inputs=x0,outputs=x%d)\\n\",\n" +
+                                "    \"\\n\",\n" +
+                                "    \"# compiling and fitting the model\\n\",\n" +
+                                "    \"time1 = time.time()\\n\",\n" +
+                                "    \"model.compile(optimizer='rmsprop',loss='categorical_crossentropy',metrics=['accuracy'])\\n\",\n" +
+                                "    \"history = model.fit(X_train,y_train,epochs=%d,batch_size=%d,validation_data=(X_test,y_test))\\n\",\n"+
+                                "    \"time2 = time.time()\\n\",\n"+
+                                "    \"%s_acc = history.history[\"accuracy\"]\\n\",\n"+
+                                "    \"%s_time = time2-time1 * 1000.0\"" ,layers.size(), cnn.getEpochs(), cnn.getBatchSize(), cnn.getName(), cnn.getName())
         );
 
         writeCodeCell(cnnBuilder.toString());
@@ -290,48 +294,51 @@ public class ToWiring extends Visitor<StringBuffer> {
     @Override
     public void visit(SVM svm) {
         writeMarkDownCell(
-                "### %s\n"+
-                        "\n"+
-                        "%s",svm.getName(),svm.getComment());
+                "    \"### %s\\n\",\n"+
+                        "    \"\\n\",\n"+
+                        "    \"%s\"", svm.getName(), svm.getComment());
 // https://www.kaggle.com/code/adoumtaiga/comparing-ml-models-for-classification
         writeCodeCell(
                     "    \"time1 = time.time()\\n\",\n" +
                         "    \"sv = LinearSVC(C=0.0001)\\n\",\n" +
                         "    \"%s = cross_val_score(sv, X_train, Y_train, cv = 8)\\n\",\n"+
                         "    \"time2 = time.time()\\n\",\n"+
-                        "    \"%s_time = time2-time1 * 1000.0\"" , svm.getName()
+                        "    \"%s_time = time2-time1 * 1000.0\\n\",\n"+
+                        "    \"%s_acc = %s.mean()\"" , svm.getName()
         );
     }
 
     @Override
     public void visit(KNN knn) {
         writeMarkDownCell(
-                "### %s\n"+
-                        "\n"+
-                        "%s",knn.getName(),knn.getComment());
+                "    \"### %s\\n\",\n"+
+                        "    \"\\n\",\n"+
+                        "    \"%s\"", knn.getName(), knn.getComment());
 // https://www.kaggle.com/code/adoumtaiga/comparing-ml-models-for-classification
         writeCodeCell(
                     "    \"time1 = time.time()\\n\",\n" +
                         "    \"knn = KNeighborsClassifier(n_neighbors=%s)\\n\",\n" +
                         "    \"%s = cross_val_score(knn, X_train, Y_train, cv = 8)\\n\",\n"+
                         "    \"time2 = time.time()\\n\",\n"+
-                        "    \"%s_time = time2-time1 * 1000.0\"" , knn.getName(),knn.getK()
+                        "    \"%s_time = time2-time1 * 1000.0\\n\",\n"+
+                        "    \"%s_acc = %s.mean()\"", knn.getName(),knn.getK()
         );
     }
 
     @Override
     public void visit(RandomForest randomForest) {
         writeMarkDownCell(
-                "### %s\n"+
-                        "\n"+
-                        "%s",randomForest.getName(),randomForest.getComment());
+                "    \"### %s\\n\",\n"+
+                        "    \"\\n\",\n"+
+                        "    \"%s\"", randomForest.getName(), randomForest.getComment());
 // https://www.kaggle.com/code/adoumtaiga/comparing-ml-models-for-classification
         writeCodeCell(
                     "    \"time1 = time.time()\\n\",\n" +
                         "    \"rand = RandomForestClassifier(n_estimators=%s, max_depth=10)\\n\",\n" +
                         "    \"%s = cross_val_score(rand, X_train, Y_train, cv = 6)\\n\",\n"+
                         "    \"time2 = time.time()\\n\",\n"+
-                        "    \"%s_time = time2-time1 * 1000.0\"" ,randomForest.getName(),randomForest.getNb_estimators()
+                        "    \"%s_time = time2-time1 * 1000.0\\n\",\n"+
+                        "    \"%s_acc = %s.mean()\"" ,randomForest.getName(),randomForest.getNb_estimators()
         );
     }
 }

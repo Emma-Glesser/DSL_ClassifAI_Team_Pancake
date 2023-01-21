@@ -203,7 +203,6 @@ public class ToWiring extends Visitor<StringBuffer> {
 
 
         if(visualization.getComparison_factor() == ClassifAI_DSL.Param.Accuracy){
-
             StringBuilder names = new StringBuilder();
             StringBuilder accuracyVar = new StringBuilder();
             names.append("    \"names=[");
@@ -228,7 +227,27 @@ public class ToWiring extends Visitor<StringBuffer> {
         }
 
         if(visualization.getComparison_factor() == ClassifAI_DSL.Param.ExecTime){
+            StringBuilder names = new StringBuilder();
+            StringBuilder time = new StringBuilder();
+            names.append("    \"names=[");
+            time.append("    \"times=[");
+            for(String name : visualization.getAlgorithmNames()){
+                names.append(String.format("%s,", name));
+                time.append(String.format("%s_time,", name));
+            }
+            names.deleteCharAt(names.lastIndexOf(","));
+            names.append("]\\n\"\n");
 
+            time.deleteCharAt(time.lastIndexOf(","));
+            time.append("]\\n\"\n");
+
+            writeCodeCell(names.toString() +
+                    time.toString() +
+                    "    \"plt.figure(figsize=(10,8))\\n\",\n" +
+                    "    \"graph = plt.barh(names,acc)\n\\n\",\n" +
+                    "    \"plt.xlabel('Execution Time')\\n\",\n" +
+                    "    \" plt.ylabel('Models')\""
+            );
         }
 
     }
@@ -276,8 +295,11 @@ public class ToWiring extends Visitor<StringBuffer> {
                         "%s",svm.getName(),svm.getComment());
 // https://www.kaggle.com/code/adoumtaiga/comparing-ml-models-for-classification
         writeCodeCell(
-                "    \"sv = LinearSVC(C=0.0001)\\n\"\n" +
-                      "    \"%s = cross_val_score(sv, X_train, Y_train, cv = 8)\"", svm.getName()
+                    "    \"time1 = time.time()\\n\",\n" +
+                        "    \"sv = LinearSVC(C=0.0001)\\n\",\n" +
+                        "    \"%s = cross_val_score(sv, X_train, Y_train, cv = 8)\\n\",\n"+
+                        "    \"time2 = time.time()\\n\",\n"+
+                        "    \"%s_time = time2-time1 * 1000.0\"" , svm.getName()
         );
     }
 
@@ -289,8 +311,11 @@ public class ToWiring extends Visitor<StringBuffer> {
                         "%s",knn.getName(),knn.getComment());
 // https://www.kaggle.com/code/adoumtaiga/comparing-ml-models-for-classification
         writeCodeCell(
-                "    \"knn = KNeighborsClassifier(n_neighbors=%s)\\n\"\n" +
-                      "    \"%s = cross_val_score(knn, X_train, Y_train, cv = 8)\"" , knn.getName(),knn.getK()
+                    "    \"time1 = time.time()\\n\",\n" +
+                        "    \"knn = KNeighborsClassifier(n_neighbors=%s)\\n\",\n" +
+                        "    \"%s = cross_val_score(knn, X_train, Y_train, cv = 8)\\n\",\n"+
+                        "    \"time2 = time.time()\\n\",\n"+
+                        "    \"%s_time = time2-time1 * 1000.0\"" , knn.getName(),knn.getK()
         );
     }
 
@@ -302,8 +327,11 @@ public class ToWiring extends Visitor<StringBuffer> {
                         "%s",randomForest.getName(),randomForest.getComment());
 // https://www.kaggle.com/code/adoumtaiga/comparing-ml-models-for-classification
         writeCodeCell(
-                " \"rand = RandomForestClassifier(n_estimators=%s, max_depth=10)\\n\"\n" +
-                        "  \"%s = cross_val_score(rand, X_train, Y_train, cv = 6)\"",randomForest.getName(),randomForest.getNb_estimators()
+                    "    \"time1 = time.time()\\n\",\n" +
+                        "    \"rand = RandomForestClassifier(n_estimators=%s, max_depth=10)\\n\",\n" +
+                        "    \"%s = cross_val_score(rand, X_train, Y_train, cv = 6)\\n\",\n"+
+                        "    \"time2 = time.time()\\n\",\n"+
+                        "    \"%s_time = time2-time1 * 1000.0\"" ,randomForest.getName(),randomForest.getNb_estimators()
         );
     }
 }

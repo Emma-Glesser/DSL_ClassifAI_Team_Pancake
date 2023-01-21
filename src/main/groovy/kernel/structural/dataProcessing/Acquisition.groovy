@@ -15,11 +15,11 @@ class Acquisition implements Visitable {
         return setName
     }
 
-    void filePath (String filePath) {
+    void setFilePath (String filePath) {
         this.filePath = filePath
     }
 
-    void setName (String setName) {
+    void setSetName (String setName) {
         this.setName = setName
     }
 

@@ -2,12 +2,14 @@ package kernel.structural.dataProcessing
 
 import kernel.generator.Visitor
 import kernel.structural.Code
+import kernel.structural.visualization.DatasetVisualization
 
 class DataProcessing extends Code {
 
     private Acquisition dataAcquisition
     private Selection dataSelection
     private Preprocessing preprocessing
+    private DatasetVisualization datasetVisualization
 
     Acquisition getDataAcquisition() {
         return dataAcquisition
@@ -46,6 +48,12 @@ class DataProcessing extends Code {
         Preprocessing preprocessing = new Preprocessing()
         preprocessing.with(cl)
         this.preprocessing = preprocessing
+    }
+
+    def visualizeDataset (String dataset) {
+        DatasetVisualization datasetVisualization = new DatasetVisualization(dataset)
+        this.datasetVisualization = datasetVisualization
+
     }
 
     @Override

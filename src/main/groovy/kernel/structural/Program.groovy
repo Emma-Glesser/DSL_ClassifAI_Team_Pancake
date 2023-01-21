@@ -6,6 +6,7 @@ import kernel.generator.Visitable
 import kernel.generator.Visitor
 import kernel.structural.algorithms.AlgorithmScope
 import kernel.structural.algorithms.ClassifAIAlgorithm
+import kernel.structural.comparison.Comparison
 import kernel.structural.dataProcessing.DataProcessing
 import kernel.structural.imports.Import
 import kernel.structural.imports.ImportScope
@@ -18,8 +19,6 @@ class Program implements NamedElement, Visitable {
     private List<ClassifAIAlgorithm> algorithmList
     private DataProcessing dataProcessing
     private Visualization visualization
-    public Param comparisonParameter
-
     private boolean importsDefined = false
     private boolean algorithmsDefined = false
 
@@ -85,6 +84,8 @@ class Program implements NamedElement, Visitable {
         this.visualization = visualization
     }
 
+
+
     List<Import> getImport() {
         importList
     }
@@ -99,5 +100,9 @@ class Program implements NamedElement, Visitable {
 
     Visualization getVisualization() {
         visualization
+    }
+
+    Comparison getComparison() {
+        comparison
     }
 }

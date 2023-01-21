@@ -15,11 +15,11 @@ class Selection implements Visitable {
         return testSize
     }
 
-    void testSize (int testSize) {
+    void setTestSize (int testSize) {
         this.testSize = testSize
     }
 
-    void shuffleData (boolean shuffleData) {
+    void setShuffleData (boolean shuffleData) {
         this.shuffleData = shuffleData
     }
 

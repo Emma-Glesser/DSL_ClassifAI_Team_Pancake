@@ -1,5 +1,7 @@
 package kernel.structural.algorithms
 
+import dsl.ClassifAI_DSL_Binding
+
 class AlgorithmScope {
     private List<ClassifAIAlgorithm> algorithms
 
@@ -17,6 +19,7 @@ class AlgorithmScope {
         ClassifAIAlgorithm algo = new CNN()
         algo.name = name
         algo.with(cl)
+        ClassifAI_DSL_Binding.instance.setVariable(name, algo)
         this.algorithms.add(algo)
     }
 
@@ -24,6 +27,7 @@ class AlgorithmScope {
         ClassifAIAlgorithm algo = new SVM()
         algo.name = name
         algo.with(cl)
+        ClassifAI_DSL_Binding.instance.setVariable(name, algo)
         this.algorithms.add(algo)
     }
 
@@ -31,6 +35,7 @@ class AlgorithmScope {
         ClassifAIAlgorithm algo = new KNN()
         algo.name = name
         algo.with(cl)
+        ClassifAI_DSL_Binding.instance.setVariable(name, algo)
         this.algorithms.add(algo)
     }
 
@@ -38,6 +43,7 @@ class AlgorithmScope {
         ClassifAIAlgorithm algo = new RandomForest()
         algo.name = name
         algo.with(cl)
+        ClassifAI_DSL_Binding.instance.setVariable(name, algo)
         this.algorithms.add(algo)
     }
 

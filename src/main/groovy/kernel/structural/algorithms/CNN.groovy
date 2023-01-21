@@ -12,13 +12,25 @@ import kernel.structural.algorithms.layers.Pooling
 class CNN extends ClassifAIAlgorithm {
 
     private List<CNNLayer> layers
+    public int epochs
+    public int batch_size
 
     List<CNNLayer> getLayers() {
         return layers
     }
 
-    void setLayers(List<CNNLayer> layers) {
-        this.layers = layers
+    int getEpochs() {
+        if (epochs <= 0) {
+            throw new RuntimeException("Epochs must be greater than 0")
+        }
+        return epochs
+    }
+
+    int getBatchSize() {
+        if (batch_size <= 0) {
+            throw new RuntimeException("Batch size must be greater than 0")
+        }
+        return batch_size
     }
 
     @Override
@@ -26,9 +38,8 @@ class CNN extends ClassifAIAlgorithm {
         visitor.visit(this)
     }
 
-    def normalizationLayer(@DelegatesTo(strategy=Closure.DELEGATE_ONLY, value= Normalization) Closure cl) {
+    def normalizationLayer() {
         CNNLayer layer = new Normalization()
-        layer.with(cl)
         this.layers.add(layer)
     }
 
@@ -50,9 +61,8 @@ class CNN extends ClassifAIAlgorithm {
         this.layers.add(layer)
     }
 
-    def flattenLayer(@DelegatesTo(strategy=Closure.DELEGATE_ONLY, value= Flatten) Closure cl) {
+    def flattenLayer() {
         CNNLayer layer = new Flatten()
-        layer.with(cl)
         this.layers.add(layer)
     }
 

@@ -1,14 +1,23 @@
 package kernel.structural.algorithms.layers
 
 class Dropout extends CNNLayer{
-    private Integer rate_of_disabled_neurons
+    private Float rateOfDisabledNeurons
 
-    def rate_of_disabled_neurons(Integer rate_of_disabled_neurons ) {
-        this.rate_of_disabled_neurons = rate_of_disabled_neurons
+    void setRateOfDisabledNeurons(Float rateOfDisabledNeurons) {
+        if (this.rateOfDisabledNeurons != null) {
+            throw new RuntimeException("Can't call `setRateOfDisabledNeurons` twice in a same layer")
+        }
+        this.rateOfDisabledNeurons = rateOfDisabledNeurons
     }
 
     @Override
     String getCode(int layerNumber) {
-        return String.format("x%i = Dropout(%f)(x%i)", layerNumber, rate_of_disabled_neurons, layerNumber-1)
+        if (rateOfDisabledNeurons == null) {
+            throw new RuntimeException("Dropout layer should have a rate_of_disabled_neurons value")
+        }
+        if (rateOfDisabledNeurons < 0 || rateOfDisabledNeurons > 1) {
+            throw new RuntimeException("Dropout layer should have a rate_of_disabled_neurons value between 0 and 1")
+        }
+        return String.format("x%i = Dropout(%f)(x%i)", layerNumber, rateOfDisabledNeurons, layerNumber-1)
     }
 }

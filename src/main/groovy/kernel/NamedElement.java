@@ -3,7 +3,7 @@ package kernel;
 
 public interface NamedElement {
 
-	public void setName(String name);
-	public String getName();
+	void setName(String name);
+	String getName();
 
 }

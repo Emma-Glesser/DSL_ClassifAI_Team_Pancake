@@ -1,6 +1,7 @@
 package kernel.generator;
 
 import dsl.ClassifAI_DSL;
+import dsl.ClassifAI_DSL_Binding;
 import kernel.App;
 import kernel.structural.*;
 import kernel.structural.algorithms.CNN;
@@ -126,22 +127,12 @@ public class ToWiring extends Visitor<StringBuffer> {
 
         writeImport(app.getProgram().getAlgorithms());
 
-//      for(Import imp : app.getProgram().getImport()){
-//			imp.accept(this);
-//		}
-
         app.getProgram().getDataProcessing().accept(this);
 
         for (ClassifAIAlgorithm algo : app.getProgram().getAlgorithms()) {
             algo.accept(this);
         }
 
-        if (app.getProgram().comparisonParameter == ClassifAI_DSL.Param.Accuracy) {
-
-        }
-        else if (app.getProgram().comparisonParameter == ClassifAI_DSL.Param.ExecTime) {
-
-        }
         app.getProgram().getVisualization().accept(this);
 
         removeLastComma();
@@ -187,11 +178,6 @@ public class ToWiring extends Visitor<StringBuffer> {
         write("\n# Cellule d'import de fonction' \n");
     }
 
-    @Override
-    public void visit(Comparison comparisonCode) {
-		write("\n# Cellule de comparaison des performances des algorithmes \n");
-    }
-
 	@Override
 	public void visit(DataProcessing dataProcessing) {
         writeMarkDownCell("### %s\n",dataProcessing.getComment());
@@ -225,25 +211,26 @@ public class ToWiring extends Visitor<StringBuffer> {
 
         StringBuilder cnnBuilder = new StringBuilder();
 
-        cnnBuilder.append(
+        Integer[] reshape = ClassifAI_DSL_Binding.getInstance().getClassifAI_DSLModel().getProgram().getDataProcessing().getPreprocessing().getReshape();
+
+        cnnBuilder.append(String.format(
                         "    \"# building the ConvNet\\n\",\n" +
-                        "    \"x0=Input(shape=(28,28,1))\\n\",\n" +
+                        "    \"x0=Input(shape=(%d,%d,%d))\\n\",\n" +
                         "    \"\\n\",\n" +
-                        "    \"# convolutional layers\\n\",\n"
-        );
+                        "    \"# layers\\n\",\n", reshape[0], reshape[1], reshape[2]));
 
         List<CNNLayer> layers = cnn.getLayers();
         for (int i = 0; i < layers.size(); i++) {
             cnnBuilder.append(String.format("    \"%s\\n\",\n",layers.get(i).getCode(i)));
         }
 
-        cnnBuilder.append(
+        cnnBuilder.append(String.format(
                         "    \"\\n\",\n" +
-                        "    \"model=Model(inputs=x0,outputs=x7)\\n\",\n" +
+                        "    \"model=Model(inputs=x0,outputs=x%d)\\n\",\n" +
                         "    \"\\n\",\n" +
                         "    \"# compiling and fitting the model\\n\",\n" +
                         "    \"model.compile(optimizer='rmsprop',loss='categorical_crossentropy',metrics=['accuracy'])\\n\",\n" +
-                        "    \"model.fit(X_train,y_train,epochs=4,batch_size=64,validation_data=(X_test,y_test))\""
+                        "    \"model.fit(X_train,y_train,epochs=%d,batch_size=%d,validation_data=(X_test,y_test))\"",layers.size(), cnn.getEpochs(), cnn.getBatchSize())
         );
 
         writeCodeCell(cnnBuilder.toString());

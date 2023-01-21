@@ -29,7 +29,6 @@ public abstract class Visitor<T> {
 	public abstract void visit(App app);
     public abstract void visit(Program program);
 
-    public abstract void visit(Comparison comparison);
 	public abstract void visit(DataProcessing dataProcessing);
 	public abstract void visit(Acquisition acquisition);
 	public abstract void visit(Selection selection);

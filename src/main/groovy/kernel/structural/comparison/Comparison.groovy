@@ -1,25 +1,15 @@
 package kernel.structural.comparison
 
-import kernel.generator.Visitor
-import kernel.structural.Code
+import dsl.ClassifAI_DSL
 
-class Comparison extends Code {
-    private List<Parameter> parameterList;
+class Comparison {
+    private Set<ClassifAI_DSL.Param> parameterList
 
-    Comparison(String comment) {
-        super(comment)
-    }
-
-    @Override
-    void accept(Visitor<StringBuffer> visitor) {
-        visitor.visit(this)
-    }
-
-    List<Parameter> getParameterList() {
-        return parameterList
-    }
-
-    void setParameterList(List<Parameter> parameterList) {
+    Comparison(Set<ClassifAI_DSL.Param> parameterList) {
         this.parameterList = parameterList
+    }
+
+    Set<ClassifAI_DSL.Param> getParameterList() {
+        return parameterList
     }
 }

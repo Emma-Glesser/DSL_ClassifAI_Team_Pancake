@@ -56,6 +56,18 @@ class ClassifAI_DSL {
 
     static enum Param {Accuracy, ExecTime}
 
+    static enum Padding {
+        VALID,
+        SAME
+    }
+
+    static enum ActivationFunction {
+        RELU,
+        SIGMOID,
+        SOFTMAX
+    }
+
+
     @TypeChecked
     void eval(File scriptFile) {
         Script script = shell.parse(scriptFile)

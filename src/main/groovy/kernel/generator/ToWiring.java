@@ -180,12 +180,17 @@ public class ToWiring extends Visitor<StringBuffer> {
 
 	@Override
 	public void visit(DataProcessing dataProcessing) {
-        writeMarkDownCell("### %s\n",dataProcessing.getComment());
+        writeMarkDownCell("    \"### %s\"\n",dataProcessing.getComment());
         StringBuilder dataProcessingBuilder = new StringBuilder();
+        int i=0;
         for (ProcessingStep processingStep : dataProcessing.getProcessingStepList()) {
-            dataProcessingBuilder.append(String.format( "    \"%s\\n\"\n", processingStep.getCode()));
+            dataProcessingBuilder.append(String.format( "    %s\n", processingStep.getCode()));
+            if(i!=dataProcessing.getProcessingStepList().size()-1) {
+                dataProcessingBuilder.append(",\n");
+            }
+            i++;
         }
-        writeCodeCell(String.format("    \"# Data processing \"%s\\n\\n\"\n" + dataProcessingBuilder, dataProcessing.getComment()));
+        writeCodeCell(String.format("    \"# Data processing\\n \\n \",\n" + dataProcessingBuilder));
     }
 
     @Override
@@ -199,7 +204,7 @@ public class ToWiring extends Visitor<StringBuffer> {
 
     @Override
     public void visit(Visualization visualization) {
-        writeMarkDownCell("### %s\n",visualization.getComment());
+        writeMarkDownCell("    \"### %s\"",visualization.getComment());
 
 
         if(visualization.getComparison_factor() == ClassifAI_DSL.Param.Accuracy){
@@ -212,15 +217,15 @@ public class ToWiring extends Visitor<StringBuffer> {
                 accuracyVar.append(String.format("%s_acc,", name));
             }
             names.deleteCharAt(names.lastIndexOf(","));
-            names.append("]\\n\"\n");
+            names.append("]\\n\",\n");
 
             accuracyVar.deleteCharAt(accuracyVar.lastIndexOf(","));
-            accuracyVar.append("]\\n\"\n");
+            accuracyVar.append("]\\n\",\n");
 
             writeCodeCell(names.toString() +
                                 accuracyVar.toString() +
                                 "    \"plt.figure(figsize=(10,8))\\n\",\n" +
-                                "    \"graph = plt.barh(names,acc)\n\\n\",\n" +
+                                "    \"graph = plt.barh(names,acc)\\n\",\n" +
                                 "    \"plt.xlabel('Accuracy')\\n\",\n" +
                                 "    \"plt.ylabel('Models')\""
                     );
@@ -236,15 +241,15 @@ public class ToWiring extends Visitor<StringBuffer> {
                 time.append(String.format("%s_time,", name));
             }
             names.deleteCharAt(names.lastIndexOf(","));
-            names.append("]\\n\"\n");
+            names.append("]\\n\",\n");
 
             time.deleteCharAt(time.lastIndexOf(","));
-            time.append("]\\n\"\n");
+            time.append("]\\n\",\n");
 
             writeCodeCell(names.toString() +
                     time.toString() +
                     "    \"plt.figure(figsize=(10,8))\\n\",\n" +
-                    "    \"graph = plt.barh(names,acc)\n\\n\",\n" +
+                    "    \"graph = plt.barh(names,acc)\\n\",\n" +
                     "    \"plt.xlabel('Execution Time')\\n\",\n" +
                     "    \"plt.ylabel('Models')\""
             );
@@ -284,7 +289,7 @@ public class ToWiring extends Visitor<StringBuffer> {
                                 "    \"model.compile(optimizer='rmsprop',loss='categorical_crossentropy',metrics=['accuracy'])\\n\",\n" +
                                 "    \"history = model.fit(X_train,y_train,epochs=%d,batch_size=%d,validation_data=(X_test,y_test))\\n\",\n"+
                                 "    \"time2 = time.time()\\n\",\n"+
-                                "    \"%s_acc = history.history[\"accuracy\"]\\n\",\n"+
+                                "    \"%s_acc = history.history[\'accuracy\']\\n\",\n"+
                                 "    \"%s_time = time2-time1 * 1000.0\"" ,layers.size(), cnn.getEpochs(), cnn.getBatchSize(), cnn.getName(), cnn.getName())
         );
 

@@ -13,6 +13,6 @@ class DatasetVisualization extends ProcessingStep {
 
     @Override
     String getCode() {
-        return String.format("print(%s)", setToVisualize)
+        return String.format("    \"print(%s)\\n\"", setToVisualize)
     }
 }

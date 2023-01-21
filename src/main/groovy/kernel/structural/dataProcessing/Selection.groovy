@@ -27,8 +27,8 @@ class Selection extends ProcessingStep {
     }
 
     String getCode() {
-        return String.format("\"# Data selection\\n\"\n" +
-                "    \"X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = %f, shuffle=%s)\\n\"\n",
+        return String.format("\"# Data selection\\n\",\n" +
+                "    \"X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = %f, shuffle=%s)\\n\"",
                 this.getTestSize(), this.getShuffleData() ? "True" : "False")
     }
 }

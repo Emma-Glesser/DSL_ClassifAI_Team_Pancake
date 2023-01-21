@@ -30,14 +30,15 @@ class Preprocessing extends ProcessingStep {
         String preprocessing = new String()
         if(reshape != null) {
             String reshapeLine = String.format("    \"X_train = X_train.values.reshape(-1, %d,%d,%d)\\n\",\n" +
-                    "    \"X_val = X_val.values.reshape(-1, %d,%d,%d)\\n\"", reshape[0], reshape[1], reshape[2], reshape[0], reshape[1], reshape[2])
+                    "    \"X_test = X_test.values.reshape(-1, %d,%d,%d)\\n\"", reshape[0], reshape[1], reshape[2], reshape[0], reshape[1], reshape[2])
             preprocessing += reshapeLine
         }
         if(reshape != null && normalize != null) {
             preprocessing += "\n,\n";
         }
         if(normalize != null) {
-            String normalizeLine = String.format("    \"X_train = X_train/(%d)\\n\"" , normalize)
+            String normalizeLine = String.format("    \"X_train = X_train/(%d)\\n\",\n" +
+                    "    \"X_test = X_test/(%d)\\n\"", normalize, normalize)
             preprocessing += normalizeLine
         }
         return String.format("\"# Data preprocessing : reshape and normalization\\n\",\n%s", preprocessing);

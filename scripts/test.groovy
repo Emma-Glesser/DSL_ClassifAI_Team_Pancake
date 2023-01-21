@@ -3,7 +3,7 @@ import static dsl.ClassifAI_DSL.*
 program "test" being {
 
     dataProcessing {
-        comment "ZF<EGZ"
+        comment "machin chouette"
         acquisition {
             filePath = "test"
             setName = "bonjour"

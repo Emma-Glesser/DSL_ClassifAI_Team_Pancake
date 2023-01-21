@@ -22,7 +22,7 @@ class Acquisition extends ProcessingStep {
 
     String getCode(){
         return String.format("\"# Data acquisition\\n\",\n" +
-                "    \"%s = pd.read_csv(%s)\\n\"",this.setName,this.filePath)
+                "    \"%s = pd.read_csv(%s)\\n \\n\"",this.setName,this.filePath)
     }
 
 }

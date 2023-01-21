@@ -180,7 +180,10 @@ public class ToWiring extends Visitor<StringBuffer> {
 
 	@Override
 	public void visit(DataProcessing dataProcessing) {
-        writeMarkDownCell("    \"### %s\"\n",dataProcessing.getComment());
+        writeMarkDownCell(
+                "    \"### Data processing\\n\",\n"+
+                        "    \"\\n\",\n"+
+                        "    \"%s\"", dataProcessing.getComment());
         StringBuilder dataProcessingBuilder = new StringBuilder();
         int i=0;
         for (ProcessingStep processingStep : dataProcessing.getProcessingStepList()) {
@@ -190,7 +193,7 @@ public class ToWiring extends Visitor<StringBuffer> {
             }
             i++;
         }
-        writeCodeCell(String.format("    \"# Data processing\\n \\n \",\n" + dataProcessingBuilder));
+        writeCodeCell(dataProcessingBuilder.toString());
     }
 
     @Override

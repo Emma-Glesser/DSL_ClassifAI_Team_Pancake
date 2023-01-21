@@ -58,7 +58,7 @@ program "test" being {
     }
 
     visualization {
-        comparison = [Param.Accuracy, Param.ExecTime]
+        comparison = Param.Accuracy
         algorithmsToVisualize = ["test", "test2"]
     }
 }

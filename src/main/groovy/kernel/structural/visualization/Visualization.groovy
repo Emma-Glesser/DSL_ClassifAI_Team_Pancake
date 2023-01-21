@@ -4,15 +4,14 @@ import dsl.ClassifAI_DSL
 import dsl.ClassifAI_DSL_Binding
 import kernel.generator.Visitor
 import kernel.structural.Code
-import kernel.structural.comparison.Comparison
 
 class Visualization extends Code {
 
     private List<String> algorithmsToVisualize
-    private Comparison comparison
+    private ClassifAI_DSL.Param comparison
 
 
-    List<String> getAlgotihmNames() {
+    List<String> getAlgorithmNames() {
         return algorithmsToVisualize
     }
 
@@ -33,19 +32,10 @@ class Visualization extends Code {
         this.algorithmsToVisualize = algorithmsToVisualize
     }
 
-    void setComparison(ClassifAI_DSL.Param... params) {
-        if (comparison != null) {
+    void setComparison(ClassifAI_DSL.Param comparison) {
+        if (this.comparison != null) {
             throw new RuntimeException("Comparison can only be defined once")
         }
-        if (params.length == 0) {
-            throw new RuntimeException("At least one parameter must be defined")
-        }
-        Set<ClassifAI_DSL.Param> paramSet = Set.of(params)
-        if (paramSet.size() != params.length) {
-            throw new RuntimeException("Parameters must be unique")
-        }
-
-        Comparison comparison = new Comparison(paramSet)
         this.comparison = comparison
     }
 

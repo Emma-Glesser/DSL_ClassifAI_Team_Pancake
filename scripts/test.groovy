@@ -20,18 +20,17 @@ program "test" being {
     }
 
     algorithms {
-        randomForest "randomForest", {
-            nb_estimators = 5
+        randomForest "randomForest" definedAs {
+            nbEstimators = 10
         }
 
-        svm "SVM" , {
-        }
+        svm "SVM"
 
-        knn "KNN", {
+        knn "KNN" definedAs {
             k = 5
         }
 
-        cnn "CNN" , {
+        cnn "CNN" definedAs {
             epochs = 12
             batch_size = 15
             convolutionLayer {

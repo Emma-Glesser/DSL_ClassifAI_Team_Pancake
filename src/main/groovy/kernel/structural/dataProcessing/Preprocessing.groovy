@@ -1,5 +1,7 @@
 package kernel.structural.dataProcessing
 
+import kernel.structural.Invalid_DSL_SyntaxeException
+
 class Preprocessing extends ProcessingStep {
     private Integer[] reshape = new Integer[3]
     private Integer normalize
@@ -14,14 +16,14 @@ class Preprocessing extends ProcessingStep {
 
     void setReshape (Integer[] reshape) {
         if (reshape.length != 3) {
-            throw new RuntimeException("Reshape should have 3 dimensions")
+            throw new Invalid_DSL_SyntaxeException("Reshape should have 3 dimensions")
         }
         this.reshape = reshape
     }
 
     void setNormalize (Integer normalize) {
         if (normalize < 0 || normalize > 255) {
-            throw new RuntimeException("Normalization should be between 0 and 255")
+            throw new Invalid_DSL_SyntaxeException("Normalization should be between 0 and 255")
         }
         this.normalize = normalize
     }

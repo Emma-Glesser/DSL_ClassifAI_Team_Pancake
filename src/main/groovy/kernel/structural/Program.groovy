@@ -48,7 +48,7 @@ class Program implements NamedElement, Visitable {
 
     def imports(@DelegatesTo(strategy = Closure.DELEGATE_ONLY, value = ImportScope) Closure cl) {
         if (importsDefined) {
-            throw new RuntimeException("Imports can only be defined once")
+            throw new Invalid_DSL_SyntaxeException("Imports can only be defined once")
         }
         ImportScope importScope = ImportScope.instance
         importScope.with(cl)
@@ -58,7 +58,7 @@ class Program implements NamedElement, Visitable {
 
     def dataProcessing(@DelegatesTo(strategy = Closure.DELEGATE_ONLY, value = DataProcessing) Closure cl) {
         if (dataProcessing != null) {
-            throw new RuntimeException("Data processing can only be defined once")
+            throw new Invalid_DSL_SyntaxeException("Data processing can only be defined once")
         }
         DataProcessing dataProcessing = new DataProcessing()
         dataProcessing.with(cl)
@@ -67,7 +67,7 @@ class Program implements NamedElement, Visitable {
 
     def algorithms(@DelegatesTo(strategy = Closure.DELEGATE_ONLY, value = AlgorithmScope) Closure cl) {
         if (algorithmsDefined) {
-            throw new RuntimeException("Algorithms can only be defined once")
+            throw new Invalid_DSL_SyntaxeException("Algorithms can only be defined once")
         }
         AlgorithmScope algorithmScope = AlgorithmScope.instance
         algorithmScope.with(cl)
@@ -77,7 +77,7 @@ class Program implements NamedElement, Visitable {
 
     def visualization(@DelegatesTo(strategy = Closure.DELEGATE_ONLY, value = Visualization) Closure cl) {
         if (visualization != null) {
-            throw new RuntimeException("Visualization can only be defined once")
+            throw new Invalid_DSL_SyntaxeException("Visualization can only be defined once")
         }
         Visualization visualization = new Visualization()
         visualization.with(cl)
@@ -92,28 +92,28 @@ class Program implements NamedElement, Visitable {
 
     List<ClassifAIAlgorithm> getAlgorithms() {
         if (algorithmList == null) {
-            throw new RuntimeException("Algorithms must be defined")
+            throw new Invalid_DSL_SyntaxeException("Algorithms must be defined")
         }
         algorithmList
     }
 
     DataProcessing getDataProcessing() {
         if (dataProcessing == null) {
-            throw new RuntimeException("Data processing must be defined")
+            throw new Invalid_DSL_SyntaxeException("Data processing must be defined")
         }
         dataProcessing
     }
 
     Visualization getVisualization() {
         if (visualization == null) {
-            throw new RuntimeException("Visualization must be defined")
+            throw new Invalid_DSL_SyntaxeException("Visualization must be defined")
         }
         visualization
     }
 
     Comparison getComparison() {
         if (comparison == null) {
-            throw new RuntimeException("Comparison must be defined")
+            throw new Invalid_DSL_SyntaxeException("Comparison must be defined")
         }
         comparison
     }

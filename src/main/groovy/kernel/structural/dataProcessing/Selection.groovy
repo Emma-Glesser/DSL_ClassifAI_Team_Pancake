@@ -1,5 +1,7 @@
 package kernel.structural.dataProcessing
 
+import kernel.structural.Invalid_DSL_SyntaxeException
+
 class Selection extends ProcessingStep {
     private Float testSize
     private Boolean shuffleData
@@ -14,10 +16,10 @@ class Selection extends ProcessingStep {
 
     void setTestSize(Float testSize) {
         if (this.testSize != null) {
-            throw new RuntimeException("Test size can only be defined once")
+            throw new Invalid_DSL_SyntaxeException("Test size can only be defined once")
         }
         if (testSize < 0 || testSize > 1) {
-            throw new RuntimeException("Test size must be between 0 and 1")
+            throw new Invalid_DSL_SyntaxeException("Test size must be between 0 and 1")
         }
         this.testSize = testSize
     }

@@ -1,9 +1,6 @@
 package kernel.structural.dataProcessing
 
-import kernel.generator.Visitable
-import kernel.generator.Visitor
-
-class Preprocessing implements Visitable {
+class Preprocessing extends ProcessingStep {
     private Integer[] reshape = new Integer[3]
     private Integer normalize
 
@@ -29,21 +26,17 @@ class Preprocessing implements Visitable {
         this.normalize = normalize
     }
 
-    void accept(Visitor<StringBuffer> visitor) {
-        visitor.visit(this)
-    }
-
     String getCode() {
-        String preprocessing = new String();
+        String preprocessing = new String()
         if(reshape != null) {
-            String reshapeline = String.format("X_train = X_train.values.reshape(-1, %i,%i,%i)\n" +
+            String reshapeLine = String.format("X_train = X_train.values.reshape(-1, %i,%i,%i)\n" +
                     "X_val = X_val.values.reshape(-1, %i,%i,%i)\n", reshape[0], reshape[1], reshape[2], reshape[0], reshape[1], reshape[2])
-            preprocessing += reshapeline;
+            preprocessing += reshapeLine
         }
         if(normalize != null) {
-            String normalizeline = String.format("X_train = X_train/(%i))\n" , normalize)
-            preprocessing += normalizeline;
+            String normalizeLine = String.format("X_train = X_train/(%i))\n" , normalize)
+            preprocessing += normalizeLine
         }
-        return String.format("\"# Data preprocessing : reshape and normalization\\n\"\n", preprocessing);
+        return String.format("\"# Data preprocessing : reshape and normalization\\n\"\n", preprocessing)
     }
 }

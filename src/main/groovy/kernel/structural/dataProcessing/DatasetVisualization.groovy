@@ -1,6 +1,6 @@
-package kernel.structural.visualization
+package kernel.structural.dataProcessing
 
-class DatasetVisualization extends Visualization {
+class DatasetVisualization extends ProcessingStep {
     private String setToVisualize
 
     DatasetVisualization(String setToVisualize) {
@@ -9,5 +9,10 @@ class DatasetVisualization extends Visualization {
 
     String getSetToVisualize() {
         return setToVisualize
+    }
+
+    @Override
+    String getCode() {
+        return String.format("print(%s)", setToVisualize)
     }
 }

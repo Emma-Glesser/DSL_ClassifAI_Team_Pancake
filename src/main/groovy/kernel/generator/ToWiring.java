@@ -1,6 +1,5 @@
 package kernel.generator;
 
-import dsl.ClassifAI_DSL;
 import dsl.ClassifAI_DSL_Binding;
 import kernel.App;
 import kernel.structural.*;
@@ -17,8 +16,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import kernel.structural.comparison.Comparison;
 import kernel.structural.dataProcessing.Preprocessing;
+import kernel.structural.dataProcessing.ProcessingStep;
 import kernel.structural.dataProcessing.Selection;
 import kernel.structural.imports.ImportFunc;
 import kernel.structural.imports.ImportLib;
@@ -181,11 +180,12 @@ public class ToWiring extends Visitor<StringBuffer> {
 	@Override
 	public void visit(DataProcessing dataProcessing) {
         writeMarkDownCell("### %s\n",dataProcessing.getComment());
-        writeCodeCell("    \"# Data processing \"%s\\n\\n\"\n" +
-                "    \"%s\\n\"\n" +
-                "    \"%s\\n\"\n"+
-                "    \"%s\\n\"\n", dataProcessing.getDataAcquisition().getCode(), dataProcessing.getDataSelection().getCode(), dataProcessing.getPreprocessing().getCode());
-	}
+        StringBuilder dataProcessingBuilder = new StringBuilder();
+        for (ProcessingStep processingStep : dataProcessing.getProcessingStepList()) {
+            dataProcessingBuilder.append(String.format( "    \"%s\\n\"\n", processingStep.getCode()));
+        }
+        writeCodeCell("    \"# Data processing \"%s\\n\\n\"\n" + dataProcessingBuilder);
+    }
 
     @Override
     public void visit(Acquisition acquisition) { }
@@ -211,7 +211,7 @@ public class ToWiring extends Visitor<StringBuffer> {
 
         StringBuilder cnnBuilder = new StringBuilder();
 
-        Integer[] reshape = ClassifAI_DSL_Binding.getInstance().getClassifAI_DSLModel().getProgram().getDataProcessing().getPreprocessing().getReshape();
+        Integer[] reshape = ClassifAI_DSL_Binding.getInstance().getClassifAI_DSLModel().getProgram().getDataProcessing().getLastShape();
 
         cnnBuilder.append(String.format(
                         "    \"# building the ConvNet\\n\",\n" +

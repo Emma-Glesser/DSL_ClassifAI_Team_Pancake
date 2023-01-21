@@ -1,9 +1,6 @@
 package kernel.structural.dataProcessing
 
-import kernel.generator.Visitable
-import kernel.generator.Visitor
-
-class Acquisition implements Visitable {
+class Acquisition extends ProcessingStep {
     private String filePath
     private String setName
 
@@ -23,13 +20,9 @@ class Acquisition implements Visitable {
         this.setName = setName
     }
 
-    void accept(Visitor<StringBuffer> visitor) {
-        visitor.visit(this)
-    }
-
     String getCode(){
         return String.format("\"# Data acquisition \\n\"\n" +
-                "    \"%s = pd.read_csv(%s)\\n\"\n",this.setName,this.filePath);
+                "    \"%s = pd.read_csv(%s)\\n\"\n",this.setName,this.filePath)
     }
 
 }

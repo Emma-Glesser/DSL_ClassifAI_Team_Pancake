@@ -6,7 +6,7 @@ import kernel.structural.Invalid_DSL_SyntaxeException
 class Dense extends CNNLayer {
 
     private Integer units
-    private ClassifAI_DSL.ActivationFunction activation_function
+    private ClassifAI_DSL.ActivationFunction activationFunction
 
     void setUnits(Integer units) {
         if (this.units != null) {
@@ -15,11 +15,11 @@ class Dense extends CNNLayer {
         this.units = units
     }
 
-    void setActivation_function(ClassifAI_DSL.ActivationFunction activation_function) {
-        if (this.activation_function != null) {
+    void setActivationFunction(ClassifAI_DSL.ActivationFunction activation_function) {
+        if (this.activationFunction != null) {
             throw new Invalid_DSL_SyntaxeException("Activation function can only be defined once")
         }
-        this.activation_function = activation_function
+        this.activationFunction = activation_function
     }
 
     @Override
@@ -30,9 +30,9 @@ class Dense extends CNNLayer {
         if (units < 1) {
             throw new Invalid_DSL_SyntaxeException("Dense layer should have a units value greater than 0")
         }
-        if (activation_function == null) {
+        if (activationFunction == null) {
             throw new Invalid_DSL_SyntaxeException("Dense layer should have an activation function")
         }
-        return String.format("x%d = Dense(%d, activation='%s')(x%d)", layerNumber, units, activation_function.toString().toLowerCase(), layerNumber-1)
+        return String.format("x%d = Dense(%d, activation='%s')(x%d)", layerNumber, units, activationFunction.toString().toLowerCase(), layerNumber-1)
     }
 }

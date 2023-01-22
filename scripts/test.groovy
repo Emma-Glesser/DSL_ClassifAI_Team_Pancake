@@ -62,7 +62,7 @@ program "test" being {
 
             denseLayer {
                 units = 10
-                activation_function = ActivationFunction.SOFTMAX
+                activationFunction = ActivationFunction.SOFTMAX
             }
         }
     }
@@ -75,7 +75,7 @@ program "test" being {
 
     visualization {
         comment "Visualize the results of the algorithms"
-        comparison = Param.Accuracy
+        comparison = Param.ExecTime
         algorithmsToVisualize = ["KNN", "SVM"]
     }
 }

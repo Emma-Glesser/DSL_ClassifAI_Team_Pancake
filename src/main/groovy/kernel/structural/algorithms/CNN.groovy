@@ -13,8 +13,8 @@ import kernel.structural.algorithms.layers.Pooling
 class CNN extends ClassifAIAlgorithm {
 
     private List<CNNLayer> layers
-    public int epochs
-    public int batch_size
+    private int epochs
+    private int batchSize
 
     CNN() {
         this.layers = new ArrayList<>()
@@ -25,17 +25,25 @@ class CNN extends ClassifAIAlgorithm {
     }
 
     int getEpochs() {
-        if (epochs <= 0) {
-            throw new Invalid_DSL_SyntaxeException("Epochs must be greater than 0")
-        }
-        return epochs
+        epochs
     }
 
     int getBatchSize() {
-        if (batch_size <= 0) {
+        batchSize
+    }
+
+    void setEpochs(int epochs) {
+        if (epochs <= 0) {
+            throw new Invalid_DSL_SyntaxeException("Epochs must be greater than 0")
+        }
+        this.epochs = epochs
+    }
+
+    void setBatchSize(int batchSize) {
+        if (batchSize <= 0) {
             throw new Invalid_DSL_SyntaxeException("Batch size must be greater than 0")
         }
-        return batch_size
+        this.batchSize = batchSize
     }
 
     @Override

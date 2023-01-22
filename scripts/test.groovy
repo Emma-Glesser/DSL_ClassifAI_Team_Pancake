@@ -32,7 +32,7 @@ program "test" being {
 
         cnn "CNN" definedAs {
             epochs = 12
-            batch_size = 15
+            batchSize = 15
             convolutionLayer {
                 filters = 32
                 kernelSize = [5, 5]

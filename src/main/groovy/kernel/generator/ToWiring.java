@@ -132,7 +132,10 @@ public class ToWiring extends Visitor<StringBuffer> {
             algo.accept(this);
         }
 
-        app.getProgram().getVisualization().accept(this);
+        writeMarkDownCell("    \"### Data visualization\"");
+        for (Visualization vis : app.getProgram().getVisualization()) {
+            vis.accept(this);
+        }
 
         removeLastComma();
 
@@ -207,12 +210,7 @@ public class ToWiring extends Visitor<StringBuffer> {
     @Override
     public void visit(Visualization visualization) {
         if (visualization.getComment() != null) {
-            writeMarkDownCell(
-                    "    \"### Data visualization\\n\",\n"+
-                            "    \"\\n\",\n"+
-                            "    \"%s\"", visualization.getComment());
-        } else {
-            writeMarkDownCell("    \"### Data visualization\"");
+            writeMarkDownCell("    \"%s\"", visualization.getComment());
         }
 
         if(visualization.getComparison_factor() == ClassifAI_DSL.Param.Accuracy){

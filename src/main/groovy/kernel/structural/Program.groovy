@@ -1,6 +1,5 @@
 package kernel.structural
 
-import dsl.ClassifAI_DSL.Param
 import kernel.NamedElement
 import kernel.generator.Visitable
 import kernel.generator.Visitor
@@ -18,13 +17,14 @@ class Program implements NamedElement, Visitable {
     private List<Import> importList
     private List<ClassifAIAlgorithm> algorithmList
     private DataProcessing dataProcessing
-    private Visualization visualization
+    private List<Visualization> visualization
     private boolean importsDefined = false
     private boolean algorithmsDefined = false
 
     Program() {
         this.importList = new ArrayList<>()
         this.algorithmList = new ArrayList<>()
+        this.visualization = new ArrayList<>()
     }
 
 
@@ -76,12 +76,9 @@ class Program implements NamedElement, Visitable {
     }
 
     def visualization(@DelegatesTo(strategy = Closure.DELEGATE_ONLY, value = Visualization) Closure cl) {
-        if (visualization != null) {
-            throw new Invalid_DSL_SyntaxeException("Visualization can only be defined once")
-        }
         Visualization visualization = new Visualization()
         visualization.with(cl)
-        this.visualization = visualization
+        this.visualization.add(visualization)
     }
 
 
@@ -104,7 +101,7 @@ class Program implements NamedElement, Visitable {
         dataProcessing
     }
 
-    Visualization getVisualization() {
+    List<Visualization> getVisualization() {
         if (visualization == null) {
             throw new Invalid_DSL_SyntaxeException("Visualization must be defined")
         }

@@ -68,13 +68,13 @@ program "test" being {
     }
 
     visualization {
-        comment("Visualize the results of the algorithms")
+        comment "Visualize the results of the algorithms"
         comparison = Param.Accuracy
         algorithmsToVisualize = ["KNN", "SVM"]
     }
 
     visualization {
-        comment("Visualize the results of the algorithms")
+        comment "Visualize the results of the algorithms"
         comparison = Param.Accuracy
         algorithmsToVisualize = ["KNN", "SVM"]
     }

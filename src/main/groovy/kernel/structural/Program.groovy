@@ -69,6 +69,9 @@ class Program implements NamedElement, Visitable {
         if (algorithmsDefined) {
             throw new Invalid_DSL_SyntaxeException("Algorithms can only be defined once")
         }
+        if (dataProcessing == null) {
+            throw new Invalid_DSL_SyntaxeException("Data processing must be defined before algorithms")
+        }
         AlgorithmScope algorithmScope = AlgorithmScope.instance
         algorithmScope.with(cl)
         this.algorithmList = algorithmScope.getAlgorithmList()
@@ -76,6 +79,9 @@ class Program implements NamedElement, Visitable {
     }
 
     def visualization(@DelegatesTo(strategy = Closure.DELEGATE_ONLY, value = Visualization) Closure cl) {
+        if (!algorithmsDefined) {
+            throw new Invalid_DSL_SyntaxeException("Algorithms must be defined before visualization")
+        }
         Visualization visualization = new Visualization()
         visualization.with(cl)
         this.visualization.add(visualization)

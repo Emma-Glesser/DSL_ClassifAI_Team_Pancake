@@ -17,6 +17,8 @@ program "test" being {
         }
 
         visualizeDataset 'X_train'
+        visualizeDataset 'X_test'
+
     }
 
     algorithms {

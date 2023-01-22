@@ -12,4 +12,4 @@ Use the script `build.sh` to get a Jar of our DSL located in `/target`.
 
 ## How to use
 
-Use the `run.sh` script giving as argument the input program. The corresponding `.ino` file will be generated in the `result` folder.
+Use the `run.sh` script giving as argument the input program. The corresponding `.ipynb` file will be generated in the `results` folder.
